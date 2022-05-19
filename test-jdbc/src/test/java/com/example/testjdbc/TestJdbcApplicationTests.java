@@ -12,7 +12,9 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +27,13 @@ class TestJdbcApplicationTests {
 
     @Autowired
     TransactionTemplate txTemplate;
+
+    @Test
+    void testMybatisGe()
+    {
+
+    }
+
     @Test
     void testTransactionManager()
     {

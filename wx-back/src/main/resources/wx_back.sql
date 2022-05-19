@@ -18,6 +18,7 @@ create table sys_work
     work_likes    bigint          default 0                  comment '被赞数',
     work_favorites bigint         default 0                  comment '被收藏数',
 
+    recommend_status char(1)      default '0'                comment '推荐状态，0为不受推荐，1为受推荐',
     status        char(1)         default '0'                comment '状态（0正常 1停用）',
     create_by     varchar(64)     default 'admin'            comment '创建者',
     create_time   timestamp   DEFAULT CURRENT_TIMESTAMP      comment '创建时间',

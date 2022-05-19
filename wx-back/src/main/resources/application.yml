@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /
+#
+
+spring:
+  datasource: 
+    url: jdbc:mysql://localhost:3306/wx_back?useTimezone=true&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: wx_back
+    password: 651392qQ
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 30
+      min-idle: 10
+      max-active: 100
+      max-wait: 10
+      time-between-eviction-runsMillis: 60000
+      min-evictable-idle-timeMillis: 300000
+      validation-query: select 'x' FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      use-global-data-source-stat: true
+ 
