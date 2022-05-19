@@ -1,0 +1,33 @@
+1、新建用户
+create user 'test'@'%' identified by '123456';
+test:用户名，%：所有ip地址，123456：密码
+刚创建的用户，查看它的权限如下
+GRANT USAGE ON *.* TO `wx_back`@`localhost`
+查了一下，意味着无权限
+
+2、创建数据库
+CREATE DATABASE test_db  DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
+3、为新用户分配权限
+grant all privileges on `test_db`.* to 'test'@'%' identified by '123456';
+授权给用户test，数据库test_db相关的所有权限，并且该用户test在所有网络IP上都有权限，%是指没有网络限制
+如果要分配特定的权限
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP ON TUTORIALS.* TO 'zara'@'localhost' IDENTIFIED BY 'zara123';
+4、刷新权限
+flush privileges;
+5、修改用户的IP访问权限
+use mysql;
+update user set host = '%' where user ='test';
+6、授予管理员权限
+grant all privileges on *.* to 'dba'@'1.2.3.4' IDENTIFIED BY 'mypassword' with grant option;
+授予用户dba访问所有库和表的权限，*.* 第一个*是所有的库，第二个*是所有的表
+1.2.3.4是可以访问的IP地址，
+with grant option是指允许用户dba，传递其拥有的权限给其他的用户
+7、授予只读权限
+grant select on *.* to 'select_only_user'@'%' IDENTIFIED BY 'your_password';
+授予用户select_only_user 所有库和表的select 权限
+8、收回权限
+revoke insert on *.* from 'someone'@'%';
+9、查看某个用户的权限
+show grants for 用户名@主机;
+10、删除用户
+drop user '用户名'@'主机';
