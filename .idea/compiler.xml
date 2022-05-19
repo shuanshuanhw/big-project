@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="wx-back" />
+        <module name="test-jdbc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
