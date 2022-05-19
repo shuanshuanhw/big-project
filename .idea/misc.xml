@@ -4,7 +4,6 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/wx-back/pom.xml" />
-        <option value="$PROJECT_DIR$/test_shiro/pom.xml" />
       </list>
     </option>
   </component>
