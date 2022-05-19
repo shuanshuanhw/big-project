@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/test_shiro/test_shiro.iml" filepath="$PROJECT_DIR$/test_shiro/test_shiro.iml" />
       <module fileurl="file://$PROJECT_DIR$/wx-back/wx-back.iml" filepath="$PROJECT_DIR$/wx-back/wx-back.iml" />
     </modules>
   </component>
