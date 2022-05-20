@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/test-jdbc/test-jdbc.iml" filepath="$PROJECT_DIR$/test-jdbc/test-jdbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-jpa/test-jpa.iml" filepath="$PROJECT_DIR$/test-jpa/test-jpa.iml" />
       <module fileurl="file://$PROJECT_DIR$/wx-back/wx-back.iml" filepath="$PROJECT_DIR$/wx-back/wx-back.iml" />
     </modules>
   </component>

@@ -1,20 +1,18 @@
 package com.example.testjdbc;
 
+import com.example.testjdbc.dao.UserMapper;
 import com.example.testjdbc.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.io.File;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +26,24 @@ class TestJdbcApplicationTests {
     @Autowired
     TransactionTemplate txTemplate;
 
+    @Autowired
+    UserMapper userMapper;
+
     @Test
     void testMybatisGe()
     {
+        User user1 = userMapper.selectByPrimaryKey(191);
+
+            log.info(user1.toString());
+
+        user1.setTruename("算算算");
+        int i = userMapper.updateByPrimaryKey(user1);
+
+        User user2 = userMapper.selectByPrimaryKey(191);
+        log.info(user2.toString());
+
+        List<User> users = userMapper.selectByUserName("黄维");
+        log.info(users.toString());
 
     }
 
@@ -72,24 +85,24 @@ class TestJdbcApplicationTests {
     {
         User user = new User();
 
-        List<Map<String, Object>> users = jdbcTemplate.queryForList("select * from user where username=? or 1=1","SD001.hw");
+        List<Map<String, Object>> users = jdbcTemplate.queryForList("select * from user where username=?","SD001.hw or 1=1");
         log.info(users.toString());
 
         // 测试jdbcTemplate
-        List<User> query = jdbcTemplate.query("select * from user", new RowMapper<User>() {
-            @Override
-            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                user.setUserName(rs.getString("username"));
-                user.setId(rs.getInt("id"));
-                return user;
-            }
-        });
+//        List<User> query = jdbcTemplate.query("select * from user", new RowMapper<User>() {
+//            @Override
+//            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                user.setUsername(rs.getString("username"));
+//                user.setId(rs.getInt("id"));
+//                return user;
+//            }
+//        });
 
-        log.info(query.toString());
-        for(User u:query)
-        {
-            log.info(String.valueOf(u.getUserName()));
-        }
+//        log.info(query.toString());
+//        for(User u:query)
+//        {
+//            log.info(String.valueOf(u.getUsername()));
+//        }
     }
 
 

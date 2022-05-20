@@ -19,8 +19,13 @@ CallableStatement	适用于当你要访问数据库存储过程的时候， Call
 2- 事务，Spring的声明式事务控制Bean的类或方法上加@Transactional，事务控制粒度较大，只能控制在方法级别，不能控制到代码粒度级别。
 如果想要在方法内手动使用事务处理，答案就是TransactionTemplate。通过bean一下配置文件，在测试类里有代码。
 
+3- 不要在sql语句中使用加号拼接字符串的方式，直接填参数进去，似乎不会发生sql注入
+
 3、MyBatis，每个基于 MyBatis 的应用都是以一个 SqlSessionFactory 的实例为核心的。
 String resource = "org/mybatis/example/mybatis-config.xml";
 InputStream inputStream = Resources.getResourceAsStream(resource);
 SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+1、使用#不会出现sql注入的情况，$现在似乎不能用了，而且#现在也支持order by。
+
 
