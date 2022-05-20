@@ -1,0 +1,105 @@
+1、走html默认的流程，弊端就是没办法对数据进行预处理，比如先对密码进行加密，也没有办法进行数据交验。
+
+<form action="/index" method="post">
+    <input type="text" name="username" value="" />
+    <input type="password" name="pwd" value="" />
+    <input type="submit" value="提交"/>
+</form>
+
+2、在提交按钮的单击函数中，通过取得form的dom对象，再调用默认的submit方法，优点就是可以对数据进行处理和效验
+<form action="/index" method="post" id="test_form">
+    <input type="text" name="username" value="" />
+    <input type="password" name="pwd" id="pwd" value="" />
+    <button type="button" onclick="doSubmitForm()">提交</button>
+</form>
+<script>
+    function doSubmitForm()
+    {
+        var form = document.getElementById('test_form');
+        var pwd = document.getElementById('pwd');
+        pwd.value = 'huangwei'
+        //再次修改input内容
+        form.submit();
+    }
+</script>
+
+3、第二种方法破坏了原本默认的提交逻辑，本来在输入框中按回车就提交，但第二种方法没办法做到，所以有第三种方法。通过form自身的onsubmit方法，来触发提交，然后进行input的修改。
+
+<form id='test_form' action='/index' method='post' omsubmit='return checkForm()'>
+    <input type='text' name='username' value=''/>
+    <input type='password' name='pwd' value =''/>
+    <button type='submit'>提交</button>
+</form>
+<script>
+            function checkForm(){
+                var form = document.getElementById('test_form');
+                //可在此修改input
+                //进行下一步
+                return true;
+            }
+</script>
+
+4、提交时使用jQuery Validate进行效验
+1- 引入包，jquery.js、jquery.validate.min.js、和localization/messages_zh.js，最后一个包可以代替默认的提示语英语提示。这是在html中写效验要求的情况，如果在js中写，就可以自己定制提示语。
+2- html语句
+<form class="cmxform" id="commentForm" method="get" action="">
+    <fieldset>
+        <legend>输入您的名字，邮箱，URL，备注。</legend>
+        <p>
+            <label for="cname">Name (必需, 最小两个字母)</label>
+            <input id="cname" name="name" minlength="2" type="text" required>
+        </p>
+        <p>
+            <input class="submit" type="submit" value="Submit">
+        </p>
+    </fieldset>
+</form>
+3- js中约定的代码
+<script>
+$.validator.setDefaults({
+    submitHandler: function() {
+      alert("提交事件!");
+    }
+});
+$().ready(function() {
+    $("#commentForm").validate();
+});
+</script>
+
+4- 可以将效验规则和提示语写在js代码$("#commentForm").validate()里
+
+5- 另一种代替默认提交的方法
+$().ready(function() {
+ $("#signupForm").validate({
+        submitHandler:function(form){
+            alert("提交事件!");
+            form.submit();
+        }
+    });
+});
+
+6- 使用 ajax 方式
+ $(".selector").validate({
+ submitHandler: function(form)
+   {
+      $(form).ajaxSubmit();
+   }
+ })
+
+7- 可以设置 validate 的默认值，写法如下：
+$.validator.setDefaults({
+  submitHandler: function(form) { alert("提交事件!");form.submit(); }
+});
+
+8- debug，只验证不提交表单
+$().ready(function() {
+ $("#signupForm").validate({
+        debug:true
+    });
+});
+
+如果一个页面中有多个表单都想设置成为 debug，则使用：
+$.validator.setDefaults({
+   debug: true
+})
+

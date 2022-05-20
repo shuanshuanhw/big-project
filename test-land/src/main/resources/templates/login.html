@@ -7,15 +7,40 @@
     <title>登陆</title>
 </head>
 <body>
-登陆
-<form action="/index" method="post">
-    <input type="text" name="username" value="" />
-    <input type="password" name="pwd" value="" />
-    <input type="submit" value="提交"/>
-</form>
+<form class="cmxform" id="commentForm" method="get" action="">
+    <fieldset>
+        <legend>输入您的名字，邮箱，URL，备注。</legend>
+        <p>
+            <label for="cname">Name (必需, 最小两个字母)</label>
+            <input id="cname" name="name" minlength="2" type="text" required>
+        </p>
+<!--        <p>-->
+<!--            <label for="cemail">E-Mail (必需)</label>-->
+<!--            <input id="cemail" type="email" name="email" required>-->
+<!--        </p>-->
 
+        <p>
+            <label for="ccomment">备注 (必需)</label>
+            <textarea id="ccomment" name="comment" required></textarea>
+        </p>
+        <p>
+            <input class="submit" type="submit" value="Submit">
+        </p>
+    </fieldset>
+</form>
 
 <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
 <script src="../static/ajax/libs/validate/jquery.validate.min.js" th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<script>
+    $.validator.setDefaults({
+        submitHandler: function() {
+            alert("提交事件!");
+        }
+    });
+    $().ready(function() {
+        $("#commentForm").validate();
+    });
+</script>
 </body>
 </html>
