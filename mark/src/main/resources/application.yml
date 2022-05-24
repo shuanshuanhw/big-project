@@ -1,0 +1,34 @@
+server:
+  servlet:
+    context-path: /
+#
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/agv?useTimezone=true&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: root
+    password: 651392qQ
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    druid:
+      initial-size: 30
+      min-idle: 100
+      max-active: 1000
+      max-wait: 100
+      time-between-eviction-runsMillis: 6000
+      min-evictable-idle-timeMillis: 30000
+      validation-query: select 'x' FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      use-global-data-source-stat: true
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
