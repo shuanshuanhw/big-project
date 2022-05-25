@@ -180,17 +180,12 @@
         },
         methods: {
             xq(id){
-                // layer.msg('进入了');
-                let resData = {}
-                getAllById(id).then((res) =>{
-                    console.log(res.data.data)
                     layer.open({
                         type: 2,
                         title: '详细信息',   //标题
                         area: ['490px', '530px'],
-                        content: '/agv/xq?id='+id //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                        content: '/xq?id='+id //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
                     });
-                })
 
                 // console.log('resData',resData.agv_name)
 

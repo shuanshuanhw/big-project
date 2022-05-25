@@ -9,7 +9,26 @@
 <!-- 引入 layui-vue 样式 -->
 <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
 <body>
-
+<div id="app">
+    <div class="layui-card">
+        <div class="layui-card-header">名称</div>
+        <div class="layui-card-body">
+            {{dataArray.agv_name}}
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">名称寓意</div>
+        <div class="layui-card-body">
+            {{dataArray.name_implication}}
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">其它建议</div>
+        <div class="layui-card-body">
+            {{dataArray.opinion}}
+        </div>
+    </div>
+</div>
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
 <script src="plugins/vue/vue.js"></script>
 <!-- 引入axios -->
@@ -17,18 +36,35 @@
 <script src="layui/layui.js"></script>
 
 <script src="js/request.js"></script>
+<script src="api/index.js"></script>
 <script>
     new Vue({
         el: '#app',
         data() {
             return {
-                id: ''
+                id: '',
+                dataArray: []
             }
         },
         computed: {},
         created() {
-            this.id = requestUrlParam('id')
-            console.log(this.id)
+            var url = window.location.href ;             //获取当前url
+            var dz_url = url.split('#')[0];                //获取#/之前的字符串
+            var cs = dz_url.split('?')[1];                //获取?之后的参数字符串
+            var cs_arr = cs.split('&');                    //参数字符串分割为数组
+            var cs={};
+            for(var i=0;i<cs_arr.length;i++){         //遍历数组，拿到json对象
+                cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+            }
+            this.id = cs.id;                                           //这样就拿到了参数中的数据
+
+            getAllById(this.id).then((res) =>{
+                console.log(res.data.data)
+                this.dataArray = res.data.data
+            })
+            console.log('this.id',this.id)
+
+
         },
         beforeDestroy() {
         },

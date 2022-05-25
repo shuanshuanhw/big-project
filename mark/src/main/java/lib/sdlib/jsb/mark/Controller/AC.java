@@ -20,14 +20,15 @@ import java.util.List;
  * 创建人： Administrator
  */
 @Controller
-@ResponseBody
-@RequestMapping("/agv")
+//@ResponseBody
+//@RequestMapping("/agv")
 public class AC {
 
     @Autowired
     DataSdlibStatiMapper dataSdlibStatiMapper;
 
-    @GetMapping("/getAll")
+    @GetMapping("/agv/getAll")
+    @ResponseBody
     public Result getAll()
     {
      //   PageHelper.startPage(1,2);
@@ -44,7 +45,7 @@ public class AC {
         return Result.ok(dataSdlibStatis);
     }
 
-    @GetMapping("/getAllById/{id}")
+    @GetMapping("/agv/getAllById/{id}")
     @ResponseBody
     public Result getAllById(@PathVariable Integer id)
     {
@@ -56,7 +57,7 @@ public class AC {
     public String xq(@PathParam("id")Integer id, HttpServletRequest req)
     {
         DataSdlibStati dataSdlibStati = dataSdlibStatiMapper.selectByPrimaryKey(id);
-        req.setAttribute("data",dataSdlibStati);
+    //    req.setAttribute("data",dataSdlibStati);
         req.setAttribute("id",id);
         StringBuilder sb = new StringBuilder();
         sb.append("名称：");
@@ -71,6 +72,6 @@ public class AC {
         sb.append("<br />");
         sb.append(dataSdlibStati.getOpinion());
 
-        return sb.toString();
+        return "xq";
     }
 }
