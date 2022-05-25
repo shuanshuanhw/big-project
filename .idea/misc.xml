@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/wx-back/pom.xml" />
         <option value="$PROJECT_DIR$/test-jdbc/pom.xml" />
         <option value="$PROJECT_DIR$/test-land/pom.xml" />
+        <option value="$PROJECT_DIR$/demo/pom.xml" />
       </list>
     </option>
   </component>

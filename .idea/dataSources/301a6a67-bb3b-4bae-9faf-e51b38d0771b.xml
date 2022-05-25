@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="jdbc:mysql://localhost:3306/pmsystem?useTimezone=true&amp;serverTimezone=Asia/Shanghai&amp;characterEncoding=UTF-8">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.23">
-    <root id="1">
-      <ServerVersion>5.7.19</ServerVersion>
-      <DefaultEngine>InnoDB</DefaultEngine>
-      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <DefaultCasing>lower/lower</DefaultCasing>
-    </root>
+    <root id="1"/>
     <schema id="2" parent="1" name="agv">
       <Collation>utf8mb4_bin</Collation>
     </schema>
