@@ -60,10 +60,17 @@ public class AC {
         req.setAttribute("id",id);
         StringBuilder sb = new StringBuilder();
         sb.append("名称：");
-        sb.append(dataSdlibStati.getAgv_name());
         sb.append("<br />");
-        sb.append("寓意：");
+        sb.append(dataSdlibStati.getAgv_name());
+        sb.append("<br />");sb.append("<br />");
+        sb.append("名称寓意：");
+        sb.append("<br />");
         sb.append(dataSdlibStati.getName_implication());
+        sb.append("<br />");sb.append("<br />");
+        sb.append("建议:");
+        sb.append("<br />");
+        sb.append(dataSdlibStati.getOpinion());
+
         return sb.toString();
     }
 }
