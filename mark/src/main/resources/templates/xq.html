@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆</title>
+</head>
+<!-- 引入 layui-vue 样式 -->
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+<body>
+
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="plugins/vue/vue.js"></script>
+<!-- 引入axios -->
+<script src="plugins/axios/axios.min.js"></script>
+<script src="layui/layui.js"></script>
+
+<script src="js/request.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                id: ''
+            }
+        },
+        computed: {},
+        created() {
+            this.id = requestUrlParam('id')
+            console.log(this.id)
+        },
+        beforeDestroy() {
+        },
+        updated()
+        {
+        },
+        // 一般在初始化页面完成后，再对dom节点进行相关操作
+        mounted() {
+
+        },
+        methods: {
+
+        }
+    })
+</script>
+</body>
+</html>

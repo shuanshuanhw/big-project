@@ -1,8 +1,11 @@
 package lib.sdlib.jsb.mark.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class DataSdlibStati implements Serializable {
     private Integer id;
 
@@ -19,6 +22,11 @@ public class DataSdlibStati implements Serializable {
     private String phone;
 
     private String name_implication;
+
+    private Boolean ifSelect = false;//用来传递最后有选择的数据
+    private String ifSelectString;//用来传递最后有选择的提示语
+
+    private String ifId;//
 
     private static final long serialVersionUID = 1L;
 

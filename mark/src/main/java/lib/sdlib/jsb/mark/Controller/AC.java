@@ -1,16 +1,16 @@
 package lib.sdlib.jsb.mark.Controller;
 
 import com.github.pagehelper.PageHelper;
+import com.sun.org.apache.regexp.internal.RE;
 import lib.sdlib.jsb.mark.common.Result;
 import lib.sdlib.jsb.mark.dao.DataSdlibStatiMapper;
 import lib.sdlib.jsb.mark.entity.DataSdlibStati;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -30,8 +30,40 @@ public class AC {
     @GetMapping("/getAll")
     public Result getAll()
     {
-        PageHelper.startPage(1,2);
+     //   PageHelper.startPage(1,2);
         List<DataSdlibStati> dataSdlibStatis = dataSdlibStatiMapper.selectAll();
+        for(DataSdlibStati data:dataSdlibStatis)
+        {
+            if(data.getName_implication().length()>100)
+                data.setName_implication(data.getName_implication().substring(0,100));
+
+            data.setIfId("if"+data.getId());
+
+            data.setIfSelectString("未勾选");
+        }
         return Result.ok(dataSdlibStatis);
+    }
+
+    @GetMapping("/getAllById/{id}")
+    @ResponseBody
+    public Result getAllById(@PathVariable Integer id)
+    {
+        DataSdlibStati dataSdlibStati = dataSdlibStatiMapper.selectByPrimaryKey(id);
+        return Result.ok(dataSdlibStati);
+    }
+
+    @GetMapping("/xq")
+    public String xq(@PathParam("id")Integer id, HttpServletRequest req)
+    {
+        DataSdlibStati dataSdlibStati = dataSdlibStatiMapper.selectByPrimaryKey(id);
+        req.setAttribute("data",dataSdlibStati);
+        req.setAttribute("id",id);
+        StringBuilder sb = new StringBuilder();
+        sb.append("名称：");
+        sb.append(dataSdlibStati.getAgv_name());
+        sb.append("<br />");
+        sb.append("寓意：");
+        sb.append(dataSdlibStati.getName_implication());
+        return sb.toString();
     }
 }

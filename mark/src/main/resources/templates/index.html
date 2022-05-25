@@ -20,9 +20,69 @@
             align-content: center;
         }
         .item{
-            width: 200px;
-            height: 100px;
-            border: 1px solid red;
+            width: 400px;
+            height: 350px;
+            border: 1px solid #b2b2b2;
+            margin-top: 30px;
+            /*flex-basis: 20px;*/
+        }
+        .item-implication{
+            text-indent:2em;
+            height: 120px;
+            font-size: 18px;
+        }
+        .in-box {
+            display: inline-block;
+        }
+
+        .checkbox{
+            width: 40px;
+            height: 40px;
+            vertical-align: bottom;
+            box-sizing: border-box;
+            cursor: pointer;
+            /*border-color: #00F7DE;*/
+        }
+        .bu{
+            width: 70px;
+            height: 40px;
+            vertical-align: bottom;
+            border: 1px solid #b2b2b2;
+            box-sizing: border-box;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #C2BE9E;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .bu:hover{
+            background-color: #666666;
+        }
+        .btext{
+            width: 70px;
+            height: 40px;
+            vertical-align: bottom;
+            border-bottom: 1px solid #b2b2b2;
+            border-top: 1px solid #b2b2b2;
+            border-left: 1px solid #b2b2b2;
+            box-sizing: border-box;
+            line-height: 40px;
+            text-align: center;
+            margin-left: 30px;
+        }
+        .layui-card-header{
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .function{
+            margin-left: 20px;
+        }
+        .top{
+            position: sticky;
+            top: 0px;
+            margin-left: 60px;
         }
     </style>
     <!-- 引入 Vue 3, 使用全局变量 Vue -->
@@ -36,25 +96,38 @@
 
 <body>
 <div id="app">
+    <div class="top" id="rrr999">头部信息</div>
 <div class="box">
 
-<div v-for="item in dataArray" :key="item.id" class="item"></div><div class="item" ></div>
+<!--<div v-for="item in dataArray" :key="item.id" class="item"></div><div class="item" ></div>-->
+
+    <div class="layui-card item" v-for="item in dataArray" :key="item.id">
+        <div class="layui-card-header">{{item.agv_name}}</div>
+        <div class="layui-card-body item-implication">
+            {{item.name_implication}}
+        </div>
+        <hr>
+        <div class="function"><div class="in-box bu"  :id="item.ifId" @click = "xq(item.id)" >详情</div><div class="in-box btext">{{item.ifSelectString}}</div><div class="in-box"><input type="checkbox" lay-skin="switch" class="checkbox"  v-model="item.ifSelect" :title="ifSelect"></div>  </div>
+        <hr>
+    </div>
+
 </div>
 </div>
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
 <script src="plugins/vue/vue.js"></script>
 <!-- 引入axios -->
 <script src="plugins/axios/axios.min.js"></script>
-
+<script src="layui/layui.js"></script>
 
 <script src="js/request.js"></script>
-<script src="./api/index.js"></script>
+<script src="api/index.js"></script>
 <script>
     new Vue({
         el: '#app',
         data() {
             return {
-                dataArray: []
+                dataArray: [],
+                ifSelect: '未勾选'
             }
         },
         computed: {},
@@ -63,16 +136,70 @@
         },
         beforeDestroy() {
         },
+        updated()
+        {
+          // alert('dddddddddddd')
+            let selectNumber = 0;
+            for(let i=0;i<this.dataArray.length;i++)
+            {
+
+                if(this.dataArray[i].ifSelect)
+                {
+                    // 如果被选择了，就将背景变成其它颜色
+                    selectNumber++;
+                    this.dataArray[i].ifSelectString = '喜欢'
+                    // this.$message.info('你点了喜欢')
+            //        layer.msg('您勾选了 '+ this.dataArray[i].agv_name);
+
+                }
+                else
+                {
+                    this.dataArray[i].ifSelectString = '未勾选'
+                 //   layer.msg('您取消勾选了'+ this.dataArray[i].agv_name);
+                }
+
+             //   console.log(this.dataArray[i].id)
+
+                console.log('selectNumber',selectNumber)
+                // 判断有多少个名称被选择
+                if(selectNumber > 10)
+                {
+                    // alert('不能超过10个选择');
+                    layer.msg('不能超过10个选择');
+                    selectNumber--;
+                    this.dataArray[i].ifSelectString = '未勾选'
+                    this.dataArray[i].ifSelect = false
+                }
+
+
+            }
+        },
         // 一般在初始化页面完成后，再对dom节点进行相关操作
         mounted() {
             this.start();
         },
         methods: {
+            xq(id){
+                // layer.msg('进入了');
+                let resData = {}
+                getAllById(id).then((res) =>{
+                    console.log(res.data.data)
+                    layer.open({
+                        type: 2,
+                        content: '/agv/xq?id='+id //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                    });
+                })
+
+                // console.log('resData',resData.agv_name)
+
+
+
+            },
             async start() {
-                this.para = 'ddd'
+                // this.para = 'ddd'
                 await  getAll().then((res) => {
                     console.log(res.data.data)
-                    dataArray = res.data.data
+                    this.dataArray = res.data.data
                 }).catch((err) => {
                     if (err == "401")
                         err =
