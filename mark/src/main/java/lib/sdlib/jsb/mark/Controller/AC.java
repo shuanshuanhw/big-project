@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.sun.org.apache.regexp.internal.RE;
 import lib.sdlib.jsb.mark.common.Result;
 import lib.sdlib.jsb.mark.dao.DataSdlibStatiMapper;
+import lib.sdlib.jsb.mark.dao.LikeTimesMapper;
 import lib.sdlib.jsb.mark.entity.DataSdlibStati;
+import lib.sdlib.jsb.mark.entity.LikeTimes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,23 @@ public class AC {
 
     @Autowired
     DataSdlibStatiMapper dataSdlibStatiMapper;
+    @Autowired
+    LikeTimesMapper likeTimesMapper;
 
+    @ResponseBody
+    @PostMapping("/agv/submitFruition")
+    public Result submitFruition(@RequestBody List<DataSdlibStati> dataArray)
+    {
+        for(DataSdlibStati data:dataArray)
+        {
+            if(data.getIfSelect())
+            {
+                LikeTimes build = LikeTimes.builder().art(data.getAgv_name()).times(1).build();
+                likeTimesMapper.insert(build);
+            }
+        }
+        return Result.ok();
+    }
     @GetMapping("/agv/getAll")
     @ResponseBody
     public Result getAll()
@@ -36,10 +54,11 @@ public class AC {
         for(DataSdlibStati data:dataSdlibStatis)
         {
             if(data.getName_implication().length()>100)
-                data.setName_implication(data.getName_implication().substring(0,100));
+                data.setName_implication(data.getName_implication().substring(0,100)+"...");
 
             data.setIfId("if"+data.getId());
 
+            data.setIfSelect(false);
             data.setIfSelectString("未勾选");
         }
         return Result.ok(dataSdlibStatis);

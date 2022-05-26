@@ -68,7 +68,7 @@
         </javaClientGenerator>
 
 <!--        主要用于配置要生成代码的数据库表格-->
-        <table tableName="data_sdlib_stati">
+        <table tableName="like_times">
 <!--            useActualColumnNames: 是否使用列名作为实体类的属性名-->
             <property name="useActualColumnNames" value="true"/>
             <!-- column：指定主键列 -->
