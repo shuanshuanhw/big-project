@@ -40,6 +40,7 @@ public class AC {
 
             data.setIfId("if"+data.getId());
 
+            data.setIfSelect(false);
             data.setIfSelectString("未勾选");
         }
         return Result.ok(dataSdlibStatis);

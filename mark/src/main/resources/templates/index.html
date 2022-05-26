@@ -84,6 +84,10 @@
             top: 0px;
             margin-left: 60px;
         }
+        .nc{
+            color: red;
+            font-size: 25px;
+        }
     </style>
     <!-- 引入 Vue 3, 使用全局变量 Vue -->
 <!--    <script src="https://unpkg.com/vue@3"></script>-->
@@ -96,7 +100,19 @@
 
 <body>
 <div id="app">
-    <div class="top" id="rrr999">头部信息</div>
+
+    <div class="layui-bg-gray" ref="testDom" style="padding: 30px;position: sticky;top: 0;background-color: white;z-index: 999;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-panel">
+                    <div style="padding: 10px;"><H1>顺德图书馆 综合考评系统</H1></div>
+                    <div style="padding: 10px;"><H3>某某某,你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 详情</H3></div>
+                    <div v-if="ifVote" style="padding: 10px;"><button type="button" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 <div class="box">
 
 <!--<div v-for="item in dataArray" :key="item.id" class="item"></div><div class="item" ></div>-->
@@ -107,7 +123,7 @@
             {{item.name_implication}}
         </div>
         <hr>
-        <div class="function"><div class="in-box bu"  :id="item.ifId" @click = "xq(item.id)" >详情</div><div class="in-box btext">{{item.ifSelectString}}</div><div class="in-box"><input type="checkbox" lay-skin="switch" class="checkbox"  v-model="item.ifSelect" :title="ifSelect"></div>  </div>
+        <div class="function"><div class="in-box bu"  @click = "xq(item.id)" >详情</div><div class="in-box btext">{{item.ifSelectString}}</div><div class="in-box"><input type="checkbox" :id="item.ifId" :data-ifS="item.ifId" @change="inputchecked"  lay-skin="switch" class="checkbox"  v-model="item.ifSelect" :title="item.ifSelect"></div>  </div>
         <hr>
     </div>
 
@@ -127,58 +143,91 @@
         data() {
             return {
                 dataArray: [],
-                ifSelect: '未勾选'
+                // ifSelect: '未勾选',
+                ifVote: false,// 是否显示出提交按钮,必须在满十个后才显示出来
+                selectNumber: 0,
+                overFlowArray: [],
+                overFlowArrayContrast: [],// 上面是更改前的,这里是更改后的,通过比对得出被更改的是哪一个
+
             }
         },
         computed: {},
         created() {
+            this.start();
+
+
 
         },
         beforeDestroy() {
         },
+        beforeUpdated(){
+        },
         updated()
         {
-          // alert('dddddddddddd')
-            let selectNumber = 0;
-            for(let i=0;i<this.dataArray.length;i++)
-            {
-
-                if(this.dataArray[i].ifSelect)
-                {
-                    // 如果被选择了，就将背景变成其它颜色
-                    selectNumber++;
-                    this.dataArray[i].ifSelectString = '喜欢'
-                    // this.$message.info('你点了喜欢')
-            //        layer.msg('您勾选了 '+ this.dataArray[i].agv_name);
-
-                }
-                else
-                {
-                    this.dataArray[i].ifSelectString = '未勾选'
-                 //   layer.msg('您取消勾选了'+ this.dataArray[i].agv_name);
-                }
-
-             //   console.log(this.dataArray[i].id)
-
-                console.log('selectNumber',selectNumber)
-                // 判断有多少个名称被选择
-                if(selectNumber > 10)
-                {
-                    // alert('不能超过10个选择');
-                    layer.msg('不能超过10个选择');
-                    selectNumber--;
-                    this.dataArray[i].ifSelectString = '未勾选'
-                    this.dataArray[i].ifSelect = false
-                }
 
 
-            }
         },
         // 一般在初始化页面完成后，再对dom节点进行相关操作
         mounted() {
-            this.start();
+
         },
         methods: {
+            inputchecked(target)
+            {
+                // 判断一下是勾选还是取消勾选
+                if(target.target.checked) {
+                    // 勾选
+                    // 看看目前有没有超过10个选择
+                    let selectNumber = 0;
+                    for (let i = 0; i < this.dataArray.length; i++) {
+                        if (this.dataArray[i].ifSelect) {
+                            // 如果被选择了，就将背景变成其它颜色
+                            selectNumber++;
+                            this.dataArray[i].ifSelectString = '喜欢'
+                            //   console.log(this.$refs[this.dataArray[i].ifId])
+                        } else {
+                            this.dataArray[i].ifSelectString = '未勾选'
+                            //   layer.msg('您取消勾选了'+ this.dataArray[i].agv_name);
+                        }
+                    }
+                    // 如果总数超过10个,将刚刚勾选的退回
+
+                    if (selectNumber > 3)
+                    {
+                        //alert('不能超过10个选择');
+                        layui.layer.msg('不能超过3个选择');
+                        // console.log('document.getElementById(target.target.dataset.ifs)',document.getElementById(target.target.dataset.ifs))
+                        document.getElementById(target.target.dataset.ifs).checked = false;
+                        for (let i = 0; i < this.dataArray.length; i++) {
+                            if(this.dataArray[i].ifId == target.target.dataset.ifs)
+                            {
+                                console.log('进入',this.dataArray[i].ifSelect)
+                                this.dataArray[i].ifSelect = false;
+                                this.dataArray[i].ifSelectString = '未勾选'
+                                selectNumber--;
+                            }
+                        }
+                    }
+
+                    if(selectNumber == 3)
+                    {
+                        // 将提交按钮显示出来
+                        this.ifVote = true;
+                        // $('input').attr("disabled","disabled")
+                    }
+                    else
+                        this.ifVote = false;
+
+                    // 一切正常
+                    // 将这个局部变量传出去,显示在部头上
+                    this.selectNumber = selectNumber;
+                }
+                else
+                {
+                    // 取消勾选
+                    this.selectNumber--;
+                }
+            },
             xq(id){
                     layer.open({
                         type: 2,
@@ -193,9 +242,9 @@
 
             },
             async start() {
-                // this.para = 'ddd'
+
                 await  getAll().then((res) => {
-                    console.log(res.data.data)
+               //     console.log(res.data.data)
                     this.dataArray = res.data.data
                 }).catch((err) => {
                     if (err == "401")
