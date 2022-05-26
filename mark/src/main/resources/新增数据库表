@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `like_times`;
+
+CREATE TABLE `like_times` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `art` varchar(100) DEFAULT NULL,
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `times` int DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#用来计算每个作品被喜欢的次数

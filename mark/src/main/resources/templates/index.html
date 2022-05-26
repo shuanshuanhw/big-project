@@ -107,7 +107,7 @@
                 <div class="layui-panel">
                     <div style="padding: 10px;"><H1>顺德图书馆 综合考评系统</H1></div>
                     <div style="padding: 10px;"><H3>某某某,你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 详情</H3></div>
-                    <div v-if="ifVote" style="padding: 10px;"><button type="button" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>
+                    <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>
                 </div>
             </div>
 
@@ -172,8 +172,9 @@
 
         },
         methods: {
-            inputchecked(target)
+            inputchecked(target)// 当多选框变动时触动这个方法
             {
+
                 // 判断一下是勾选还是取消勾选
                 if(target.target.checked) {
                     // 勾选
@@ -192,11 +193,14 @@
                     }
                     // 如果总数超过10个,将刚刚勾选的退回
 
-                    if (selectNumber > 3)
+                    this.selectNumber = selectNumber;
+                    if (this.selectNumber > 3)
                     {
                         //alert('不能超过10个选择');
                         layui.layer.msg('不能超过3个选择');
                         // console.log('document.getElementById(target.target.dataset.ifs)',document.getElementById(target.target.dataset.ifs))
+
+                        // 首先必须先置false,否则下面的this.dataArray[i].ifSelect = false;无效
                         document.getElementById(target.target.dataset.ifs).checked = false;
                         for (let i = 0; i < this.dataArray.length; i++) {
                             if(this.dataArray[i].ifId == target.target.dataset.ifs)
@@ -204,29 +208,51 @@
                                 console.log('进入',this.dataArray[i].ifSelect)
                                 this.dataArray[i].ifSelect = false;
                                 this.dataArray[i].ifSelectString = '未勾选'
-                                selectNumber--;
+                                this.selectNumber--;
                             }
                         }
                     }
 
-                    if(selectNumber == 3)
-                    {
-                        // 将提交按钮显示出来
-                        this.ifVote = true;
-                        // $('input').attr("disabled","disabled")
-                    }
-                    else
-                        this.ifVote = false;
 
-                    // 一切正常
-                    // 将这个局部变量传出去,显示在部头上
-                    this.selectNumber = selectNumber;
+
                 }
                 else
                 {
                     // 取消勾选
-                    this.selectNumber--;
+                 //   this.selectNumber--;
+                    document.getElementById(target.target.dataset.ifs).checked = false;
+                    for (let i = 0; i < this.dataArray.length; i++) {
+                        if(this.dataArray[i].ifId == target.target.dataset.ifs)
+                        {
+                            console.log('进入',this.dataArray[i].ifSelect)
+                            this.dataArray[i].ifSelect = false;
+                            this.dataArray[i].ifSelectString = '未勾选'
+                            this.selectNumber--;
+                        }
+                    }
                 }
+
+
+                // 判断一下是否能显示提交按钮
+                if(this.selectNumber == 3)
+                {
+                    // 将提交按钮显示出来
+                    this.ifVote = true;
+                    // $('input').attr("disabled","disabled")
+                }
+                else
+                    this.ifVote = false;
+            },
+            async submitFruition(){// 提交成果给后台去计算
+                await  submitFruition(this.dataArray).then((res) => {
+
+                }).catch((err) => {
+                    if (err == "401")
+                        err =
+                            "您可能没有相关权限，或者权限已过期，可尝试重新登陆、更换帐号或联系管理员";
+                    alert(err);
+                });
+
             },
             xq(id){
                     layer.open({
