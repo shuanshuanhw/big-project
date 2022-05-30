@@ -44,6 +44,27 @@ public interface DataSdlibStatiMapper {
     })
     DataSdlibStati selectByPrimaryKey(Integer id);
 
+
+
+    @Select({
+            "select",
+            "id, agv_name, clientip, create_time, name, opinion, phone, name_implication",
+            "from data_sdlib_stati",
+            "where agv_name = #{art,jdbcType=VARCHAR}"
+    })
+    @Results({
+            @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="agv_name", property="agv_name", jdbcType=JdbcType.VARCHAR),
+            @Result(column="clientip", property="clientip", jdbcType=JdbcType.VARCHAR),
+            @Result(column="create_time", property="create_time", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+            @Result(column="opinion", property="opinion", jdbcType=JdbcType.VARCHAR),
+            @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
+            @Result(column="name_implication", property="name_implication", jdbcType=JdbcType.LONGVARCHAR)
+    })
+    DataSdlibStati selectByArt(String art);
+
+
     @Select({
         "select",
         "id, agv_name, clientip, create_time, name, opinion, phone, name_implication",

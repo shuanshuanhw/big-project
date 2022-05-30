@@ -5,9 +5,23 @@ function getAll() {
     })
 }
 
+function getTop10() {
+    return $axios({
+        'url': '/getTop10',
+        'method': 'get'
+    })
+}
+
 function getAllById(id) {
     return $axios({
         'url': `/agv/getAllById/${id}`,
+        'method': 'get'
+    })
+}
+
+function getAllByIds(ids) {
+    return $axios({
+        'url': `/agv/getAllByIds/${ids}`,
         'method': 'get'
     })
 }

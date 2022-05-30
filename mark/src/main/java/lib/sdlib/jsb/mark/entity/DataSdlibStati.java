@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class DataSdlibStati implements Serializable {
+public class DataSdlibStati implements Serializable,Comparable<DataSdlibStati> {
     private Integer id;
 
     private String agv_name;
@@ -26,6 +26,7 @@ public class DataSdlibStati implements Serializable {
     private Boolean ifSelect = false;//用来传递最后有选择的数据
     private String ifSelectString;//用来传递最后有选择的提示语
 
+    private  int score;
     private String ifId;//
 
     private static final long serialVersionUID = 1L;
@@ -92,5 +93,10 @@ public class DataSdlibStati implements Serializable {
 
     public void setName_implication(String name_implication) {
         this.name_implication = name_implication == null ? null : name_implication.trim();
+    }
+
+    @Override
+    public int compareTo(DataSdlibStati o) {
+        return o.getScore() - this.getScore();
     }
 }

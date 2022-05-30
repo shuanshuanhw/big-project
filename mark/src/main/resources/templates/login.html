@@ -4,34 +4,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/common.css" type="text/css">
+    <link rel="stylesheet" href="css/login.css" type="text/css">
+
     <title>登陆</title>
 </head>
 <body>
-<form class="cmxform" id="commentForm" method="get" action="">
-    <fieldset>
-        <legend>输入您的名字，邮箱，URL，备注。</legend>
-        <p>
-            <label for="cname">Name (必需, 最小两个字母)</label>
-            <input id="cname" name="name" minlength="2" type="text" required>
-        </p>
-<!--        <p>-->
-<!--            <label for="cemail">E-Mail (必需)</label>-->
-<!--            <input id="cemail" type="email" name="email" required>-->
-<!--        </p>-->
+<div class="login" id="login-app">
+    <div class="login-box">
+<!--        <img src="image/login/login-l.png" alt="">-->
+        <img src="image/login/book1.jpg" alt="">
+        <div class="login-form">
+            <el-form ref="loginForm" :model="loginForm" :rules="loginRules" >
+                <div class="login-form-title">
+                    <img src="image/login/logo.png" style="width:139px;height:42px;" alt="" />
+                </div>
+                <el-form-item prop="username">
+                    <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号" maxlength="20"
+                              prefix-icon="iconfont icon-user" />
+                </el-form-item>
+                <el-form-item prop="password">
+                    <el-input v-model="loginForm.password" type="password" placeholder="密码" prefix-icon="iconfont icon-lock" maxlength="20"
+                              @keyup.enter.native="handleLogin" />
+                </el-form-item>
+                <el-form-item style="width:100%;">
+                    <!--             :loading="loading"的作用就是当为真时，按键会有小小的东西在转，显得很有仪式感-->
+                    <el-button :loading="loading" class="login-btn" size="medium" type="primary" style="width:100%;"
+                               @click.native.prevent="handleLogin">
+                        <span v-if="!loading">登录</span>
+                        <span v-else>登录中...</span>
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+</div>
 
-        <p>
-            <label for="ccomment">备注 (必需)</label>
-            <textarea id="ccomment" name="comment" required></textarea>
-        </p>
-        <p>
-            <input class="submit" type="submit" value="Submit">
-        </p>
-    </fieldset>
-</form>
-
-<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
-<script src="../static/ajax/libs/validate/jquery.validate.min.js" th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<!--<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>-->
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js"></script>
+<!--<script src="../static/ajax/libs/validate/jquery.validate.min.js" th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>-->
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="plugins/vue/vue.js"></script>
+
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<!-- 引入axios -->
+<script src="plugins/axios/axios.min.js"></script>
+<script src="layui/layui.js"></script>
+
+<script src="js/request.js"></script>
+
 <script>
     $.validator.setDefaults({
         submitHandler: function() {
@@ -41,6 +68,67 @@
     $().ready(function() {
         $("#commentForm").validate();
     });
+
+    new Vue({
+        el: '#login-app',
+        data() {
+            return {
+                loginForm:{
+                    username: 'admin',
+                    password: '123456'
+                },
+                loading: false
+            }
+        },
+        computed: {
+            loginRules() {
+                const validateUsername = (rule, value, callback) => {
+                    if (value.length < 1 ) {
+                        callback(new Error('请输入用户名'))
+                    } else {
+                        callback()
+                    }
+                }
+                const validatePassword = (rule, value, callback) => {
+                    if (value.length < 6) {
+                        callback(new Error('密码必须在6位以上'))
+                    } else {
+                        callback()
+                    }
+                }
+                return {
+                    'username': [{ 'validator': validateUsername, 'trigger': 'blur' }],
+                    'password': [{ 'validator': validatePassword, 'trigger': 'blur' }]
+                }
+            }
+        },
+        created() {
+        },
+        methods: {
+            // async表示是一个异步函数
+            async handleLogin() {
+                //　ref 写在标签上时：this.$refs.名字  获取的是标签对应的dom元素
+                this.$refs.loginForm.validate(async (valid) => {
+                    if (valid) {
+                        this.loading = true
+                        let res = await loginApi(this.loginForm)// await表示要等其它在后面的函数执行完才继续执行这个
+                        if (String(res.code) === '1') {
+                            // 登陆成功后，把个人信息放在浏览器存储区域
+                            localStorage.setItem('userInfo',JSON.stringify(res.data))
+                            window.location.href= '/backend/index.html'
+                        } else {
+                            // 这个应该是ｖｕｅ内置的函数
+                            this.$message.error(res.msg)
+                            this.loading = false
+                        }
+                    }
+                })
+            }
+        }
+    })
+
 </script>
+
+
 </body>
 </html>

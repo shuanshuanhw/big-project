@@ -1,20 +1,18 @@
 package lib.sdlib.jsb.mark.entity;
 
 import lombok.Builder;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Builder
+@Data
 public class LikeTimes implements Serializable {
     private Integer id;
-
     private String art;
-
     private Date create_time;
-
     private Integer times;
-
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {

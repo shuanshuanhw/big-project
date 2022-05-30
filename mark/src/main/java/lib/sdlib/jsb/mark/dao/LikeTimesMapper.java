@@ -38,6 +38,28 @@ public interface LikeTimesMapper {
     LikeTimes selectByPrimaryKey(Integer id);
 
     @Select({
+            "select",
+            "id, art, create_time, times",
+            "from like_times",
+            "where art = #{art,jdbcType=VARCHAR}"
+    })
+    @Results({
+            @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="art", property="art", jdbcType=JdbcType.VARCHAR),
+            @Result(column="create_time", property="create_time", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="times", property="times", jdbcType=JdbcType.INTEGER)
+    })
+    LikeTimes selectByArt(String art);
+
+    @Select({
+            "select",
+            "count(*)",
+            "from like_times",
+            "where art = #{art,jdbcType=VARCHAR}"
+    })
+    int selectCountByArt(String art);
+
+    @Select({
         "select",
         "id, art, create_time, times",
         "from like_times"

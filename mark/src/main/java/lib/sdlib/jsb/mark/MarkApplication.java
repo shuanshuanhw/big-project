@@ -7,11 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
 public class MarkApplication {
-
-
-
     public static void main(String[] args) {
         SpringApplication.run(MarkApplication.class, args);
     }
-
 }

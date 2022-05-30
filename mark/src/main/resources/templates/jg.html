@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆</title>
+</head>
+<!-- 引入 layui-vue 样式 -->
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+<style>
+    .box{
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: baseline;
+        align-content: flex-start;
+        flex-direction: row;
+    }
+    .item{
+        width: 400px;
+        height: 200px;
+        border: 1px solid #b2b2b2;
+        margin-top: 30px;
+        /*flex-basis: 20px;*/
+    }
+    .item-implication{
+        text-indent:2em;
+        height: 120px;
+        font-size: 18px;
+    }
+    .in-box {
+        display: inline-block;
+    }
+
+    .checkbox{
+        width: 40px;
+        height: 40px;
+        vertical-align: bottom;
+        box-sizing: border-box;
+        cursor: pointer;
+        /*border-color: #00F7DE;*/
+    }
+    .bu{
+        width: 70px;
+        height: 40px;
+        vertical-align: bottom;
+        border: 1px solid #b2b2b2;
+        box-sizing: border-box;
+        line-height: 40px;
+        text-align: center;
+        cursor: pointer;
+        background-color: #C2BE9E;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .bu:hover{
+        background-color: #666666;
+    }
+    .btext{
+        width: 70px;
+        height: 40px;
+        vertical-align: bottom;
+        border-bottom: 1px solid #b2b2b2;
+        border-top: 1px solid #b2b2b2;
+        border-left: 1px solid #b2b2b2;
+        box-sizing: border-box;
+        line-height: 40px;
+        text-align: center;
+        margin-left: 30px;
+    }
+    .layui-card-header{
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .function{
+        margin-left: 20px;
+    }
+    .top{
+        position: sticky;
+        top: 0px;
+        margin-left: 60px;
+    }
+    .nc{
+        color: red;
+        font-size: 25px;
+    }
+</style>
+<body>
+<div id="app">
+    <div class="box">
+
+        <!--<div v-for="item in dataArray" :key="item.id" class="item"></div><div class="item" ></div>-->
+
+        <div class="layui-card item" v-for="item in dataArray" :key="item.id">
+            <div class="layui-card-header" style="color: #C2BE9E;">{{item.agv_name}}</div>
+            <div class="layui-card-body item-implication">
+                {{item.name_implication}}
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="plugins/vue/vue.js"></script>
+<!-- 引入axios -->
+<script src="plugins/axios/axios.min.js"></script>
+<script src="layui/layui.js"></script>
+
+<script src="js/request.js"></script>
+<script src="api/index.js"></script>
+<script>
+
+
+
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                id: '',
+                dataArray: []
+            }
+        },
+        computed: {},
+        created() {
+            var url = window.location.href ;             //获取当前url
+            var dz_url = url.split('#')[0];                //获取#/之前的字符串
+            var cs = dz_url.split('?')[1];                //获取?之后的参数字符串
+            var cs_arr = cs.split('&');                    //参数字符串分割为数组
+            var cs={};
+            for(var i=0;i<cs_arr.length;i++){         //遍历数组，拿到json对象
+                cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+            }
+
+            this.id = cs.id;                                           //这样就拿到了参数中的数据
+
+            getAllByIds(this.id).then((res) =>{
+                console.log(res.data.data)
+                this.dataArray = res.data.data
+            })
+            console.log('this.id',this.id)
+
+
+        },
+        beforeDestroy() {
+        },
+        updated()
+        {
+        },
+        // 一般在初始化页面完成后，再对dom节点进行相关操作
+        mounted() {
+
+        },
+        methods: {
+
+        }
+    })
+</script>
+</body>
+</html>

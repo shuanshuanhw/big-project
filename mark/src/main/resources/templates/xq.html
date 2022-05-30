@@ -56,6 +56,8 @@
             for(var i=0;i<cs_arr.length;i++){         //遍历数组，拿到json对象
                 cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
             }
+
+
             this.id = cs.id;                                           //这样就拿到了参数中的数据
 
             getAllById(this.id).then((res) =>{

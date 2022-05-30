@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 layui-vue 样式 -->
     <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/common.css" type="text/css">
+    <link rel="stylesheet" href="css/login.css" type="text/css">
+
     <style>
         .box{
             display: -webkit-flex; /* Safari */
@@ -25,6 +30,15 @@
             border: 1px solid #b2b2b2;
             margin-top: 30px;
             /*flex-basis: 20px;*/
+        }
+        .item-top{
+            width: 400px;
+            height: 30px;
+            color: #C2BE9E;
+            font-size: 18px;
+            line-height: 30px;
+            border: 1px solid #b2b2b2;
+            text-align: center;
         }
         .item-implication{
             text-indent:2em;
@@ -99,14 +113,20 @@
 </head>
 
 <body>
-<div id="app">
+<div id="app3">
 
     <div class="layui-bg-gray" ref="testDom" style="padding: 30px;position: sticky;top: 0;background-color: white;z-index: 999;">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-panel">
                     <div style="padding: 10px;"><H1>顺德图书馆 综合考评系统</H1></div>
-                    <div style="padding: 10px;"><H3>某某某,你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 详情</H3></div>
+                    <div style="padding: 10px;"><H3>某某某,你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">详情</span></a> </H3></div>
+                    <div style="padding: 10px;" v-if="ifVote2"><H2>您当前选择的作品如下(<span class="nc" @Click="ifVote2 = false">隐藏</span>):</H2></div>
+                    <div style="padding: 10px;" class="box" v-if="ifVote2">
+                        <div class="layui-card item-top" v-for="item in dataArraySelect" :key="item.id" style="">
+                            {{item.agv_name}}
+                        </div>
+                    </div>
                     <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>
                 </div>
             </div>
@@ -118,7 +138,7 @@
 <!--<div v-for="item in dataArray" :key="item.id" class="item"></div><div class="item" ></div>-->
 
     <div class="layui-card item" v-for="item in dataArray" :key="item.id">
-        <div class="layui-card-header">{{item.agv_name}}</div>
+        <div class="layui-card-header" style="color: #C2BE9E;">{{item.agv_name}}</div>
         <div class="layui-card-body item-implication">
             {{item.name_implication}}
         </div>
@@ -138,13 +158,18 @@
 <script src="js/request.js"></script>
 <script src="api/index.js"></script>
 <script>
+
+
+
     new Vue({
-        el: '#app',
+        el: '#app3',
         data() {
             return {
                 dataArray: [],
+                dataArraySelect: [],// 保存已经勾选的作品
                 // ifSelect: '未勾选',
                 ifVote: false,// 是否显示出提交按钮,必须在满十个后才显示出来
+                ifVote2: false,
                 selectNumber: 0,
                 overFlowArray: [],
                 overFlowArrayContrast: [],// 上面是更改前的,这里是更改后的,通过比对得出被更改的是哪一个
@@ -174,16 +199,18 @@
         methods: {
             inputchecked(target)// 当多选框变动时触动这个方法
             {
-
+                // 清空已勾选列表
+                this.dataArraySelect = [];
                 // 判断一下是勾选还是取消勾选
                 if(target.target.checked) {
-                    // 勾选
                     // 看看目前有没有超过10个选择
                     let selectNumber = 0;
                     for (let i = 0; i < this.dataArray.length; i++) {
                         if (this.dataArray[i].ifSelect) {
                             // 如果被选择了，就将背景变成其它颜色
                             selectNumber++;
+                            this.dataArraySelect.push(this.dataArray[i]);
+
                             this.dataArray[i].ifSelectString = '喜欢'
                             //   console.log(this.$refs[this.dataArray[i].ifId])
                         } else {
@@ -194,10 +221,10 @@
                     // 如果总数超过10个,将刚刚勾选的退回
 
                     this.selectNumber = selectNumber;
-                    if (this.selectNumber > 3)
+                    if (this.selectNumber > 10)
                     {
                         //alert('不能超过10个选择');
-                        layui.layer.msg('不能超过3个选择');
+                        layui.layer.msg('不能超过10个选择');
                         // console.log('document.getElementById(target.target.dataset.ifs)',document.getElementById(target.target.dataset.ifs))
 
                         // 首先必须先置false,否则下面的this.dataArray[i].ifSelect = false;无效
@@ -234,17 +261,30 @@
 
 
                 // 判断一下是否能显示提交按钮
-                if(this.selectNumber == 3)
+                if(this.selectNumber == 10)
                 {
                     // 将提交按钮显示出来
                     this.ifVote = true;
+                    this.ifVote2 = true;
                     // $('input').attr("disabled","disabled")
                 }
                 else
+                {
                     this.ifVote = false;
+                    this.ifVote2 = false;
+                }
+
             },
             async submitFruition(){// 提交成果给后台去计算
                 await  submitFruition(this.dataArray).then((res) => {
+                    if(res.data.flag)
+                    {
+                        layer.msg('提交成功,将跳转到考评第二流程...');
+                        window.location.href= '/agv/mark'
+                    }
+                    else {
+                        layer.msg('提交失败');
+                    }
 
                 }).catch((err) => {
                     if (err == "401")
@@ -266,6 +306,27 @@
 
 
 
+            },
+            jg(){
+                // 1 遍历一下,看看有哪些作品被勾选,拼接id,发给子弹窗,子弹窗发给后台,取数据列表
+                let id = ''
+                for (let i = 0; i < this.dataArray.length; i++) {
+                    if (this.dataArray[i].ifSelect) {
+                        if(i == 0)
+                        {
+                            console.log('进入')
+                            id = this.dataArray[i].id;
+                        }
+                        else
+                        id = id + 'a' + this.dataArray[i].id;
+                    }
+                }
+                layer.open({
+                    type: 2,
+                    title: '以下是您当前已经勾选的喜欢列表',   //标题
+                    area: ['890px', '430px'],
+                    content: '/jg?id='+id //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                });
             },
             async start() {
 

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考评打分</title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <link rel="stylesheet" href="css/common.css" type="text/css">
+    <style>
+        .demo-table-expand {
+            font-size: 0;
+        }
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 100%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="layui-bg-gray" ref="testDom" style="padding: 30px;position: sticky;top: 0;background-color: white;z-index: 999;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-panel">
+                    <div style="padding: 10px;"><H1>顺德图书馆 综合考评系统 --- 考评打分</H1></div>
+<!--                    <div style="padding: 10px;"><H3>某某某,你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">详情</span></a> </H3></div>-->
+<!--                    <div style="padding: 10px;" v-if="ifVote2"><H2>您当前选择的作品如下(<span class="nc" @Click="ifVote2 = false">隐藏</span>):</H2></div>-->
+<!--                    <div style="padding: 10px;" class="box" v-if="ifVote2">-->
+<!--                        <div class="layui-card item-top" v-for="item in dataArraySelect" :key="item.id" style="">-->
+<!--                            {{item.agv_name}}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>-->
+                </div>
+            </div>
+
+            <div class="content">
+
+
+                <el-table
+                        :data="tableData"
+                        style="width: 100%">
+                    <el-table-column type="expand">
+                        <template slot-scope="props">
+                            <el-form label-position="left" class="demo-table-expand">
+                                <el-form-item label="创意名称">
+                                    <div>{{ props.row.agv_name }}</div>
+                                </el-form-item>
+                                <el-form-item label="名称寓意">
+                                    <div>{{ props.row.name_implication }}</div>
+                                </el-form-item>
+                                <el-form-item label="其它意见">
+                                    <span>{{ props.row.opinion }}</span>
+                                </el-form-item>
+                            </el-form>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            type="index"
+                            label="名次"
+                            >
+                    </el-table-column>
+                    <el-table-column
+                            label="创意名称"
+                            prop="agv_name">
+                    </el-table-column>
+
+                    <el-table-column
+                            label="得票"
+                            prop="score">
+                    </el-table-column>
+
+                    <el-table-column
+                            label="作者"
+                            prop="name">
+                    </el-table-column>
+
+                    <el-table-column
+                            label="日期"
+                            prop="create_time">
+                        <template slot-scope="scope">{{scope.row.createTime| dateFormat}}</template>
+                    </el-table-column>
+                </el-table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="plugins/vue/vue.js"></script>
+<!-- 引入axios -->
+<script src="plugins/axios/axios.min.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="moment/moment.js"></script>
+
+<script src="js/request.js"></script>
+<script src="api/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                tableData:[]
+            }
+        },
+        computed: {},
+        created() {
+            this.start();
+        },
+        beforeDestroy() {
+        },
+        beforeUpdated(){
+        },
+        updated()
+        {
+
+
+        },
+        // 一般在初始化页面完成后，再对dom节点进行相关操作
+        mounted() {
+
+            // while (true)
+            // {
+            //     setTimeout(this.start(), 3000);
+            //     console.log('1111111111111')
+            // }
+        },
+        filters: {
+            dateFormat:function(dateStr,pattern='YYYY-MM-DD HH:mm:ss'){
+                return moment(dateStr).format(pattern);
+            }
+        },
+        methods: {
+            async start() {
+
+                await  getTop10().then((res) => {
+                         console.log(res.data.data)
+                    this.tableData = res.data.data
+                }).catch((err) => {
+                    if (err == "401")
+                        err =
+                            "您可能没有相关权限，或者权限已过期，可尝试重新登陆、更换帐号或联系管理员";
+                    alert(err);
+                });
+            },
+        }
+    })
+</script>
+</body>
+</html>

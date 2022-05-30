@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试elementui的table</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .c1{
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-table
+            :data="tableData"
+            style="width: 100%"
+            stripe
+            size="medium"
+            :cell-class-name="cellClass"
+            header-row-class-name="c1"
+            highlight-current-row
+            border
+            @select="selectItem"
+            @select-all="selectItemAll"
+            @selection-change="selectChange"
+            @current-change="currentChange"
+    >
+
+        <el-table-column
+                type="selection"
+                width="55">
+        </el-table-column>
+
+
+        <el-table-column
+                prop="date"
+                label="日期"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="姓名"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="address"
+                label="地址">
+        </el-table-column>
+    </el-table>
+</div>
+
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="plugins/vue/vue.js"></script>
+<!-- 引入axios -->
+<script src="plugins/axios/axios.min.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                // RowStyle:{'color':'red'},
+                staus: false,
+                tableData: [{
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                }, {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1519 弄'
+                }, {
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                }]
+            }
+        },
+        computed: {},
+        created() {
+        },
+        beforeDestroy() {
+        },
+        beforeUpdated(){
+        },
+        updated()
+        {
+
+
+        },
+        // 一般在初始化页面完成后，再对dom节点进行相关操作
+        mounted() {
+
+        },
+        methods: {
+            selectItem(row)
+            {
+                console.log('row ', row)
+            },
+            selectItemAll(row)
+            {
+                console.log('rows ', row)
+            },
+            selectChange(select)
+            {
+                console.log('select ', select)
+            },
+            mouseHover(row, column, cell, event)
+            {
+                console.log('column ', column)
+            },
+            currentChange(currentRow, oldCurrentRow)
+            {
+                console.log('currentRow ', currentRow)
+                console.log('oldCurrentRow ', oldCurrentRow)
+            },
+            // rowStyle(row, rowIndex)
+            // {
+            //         return 'background-color:#ecf5ff'
+            // }
+            RowStyle(row, rowIndex)
+            {
+                console.log('rowIndex',row.rowIndex)
+                if(row.rowIndex === 2)
+                    return 'color: red;'
+                 // return new Object({'color':'red'})
+            }
+            ,
+            cellClass({row, column, rowIndex, columnIndex})
+            {
+                console.log('column.columnIndex',rowIndex)
+                if(columnIndex ===2)
+                    return "c1";
+            }
+        }
+    })
+</script>
+</body>
+</html>
