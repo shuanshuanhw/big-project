@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/login.css" type="text/css">
 
     <title>登陆</title>
+    <style>
+    </style>
 </head>
 <body>
 <div class="login" id="login-app">
@@ -17,9 +19,12 @@
 <!--        <img src="image/login/login-l.png" alt="">-->
         <img src="image/login/book1.jpg" alt="">
         <div class="login-form">
+
             <el-form ref="loginForm" :model="loginForm" :rules="loginRules" >
-                <div class="login-form-title">
-                    <img src="image/login/logo.png" style="width:139px;height:42px;" alt="" />
+<!--                <div style="text-align: right;margin-top: 10px;margin-bottom: 50px;"><img src="image/login/logo.png" style="width:130px;" alt="" /></div>-->
+                <div class="login-form-title" style="font-size: 25px !important;font-weight: 600!important;">
+                    <div>顺德图书馆 </div>
+                    <div style="font-size:22px;font-weight: 400!important;color: #999966;"> &nbsp;-- 综合投票系统</div>
                 </div>
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号" maxlength="20"

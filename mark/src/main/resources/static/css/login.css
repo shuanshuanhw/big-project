@@ -8,6 +8,7 @@
 .login-box {
   width: 1000px;
   height: 474.38px;
+  /*height: auto;*/
   border-radius: 8px;
   display: flex;
 }
@@ -31,8 +32,9 @@
   align-items: center;
 }
 .login-form .el-form {
-  width: 214px;
-  height: 307px;
+  width: 300px;
+  /*width: 300px;*/
+  height: auto;
 }
 .login-form .el-form-item {
   margin-bottom: 30px;
@@ -79,7 +81,10 @@
   font-weight: 500;
   font-size: 14px;
   border: 0;
-  background-color: #ffc200;
+  /*background-color: #ffc200;*/
+  background-color: #B1B18B;
+  color: whitesmoke;
+;
 }
 .login-btn:hover,
 .login-btn:focus {
@@ -87,7 +92,7 @@
   /* color: #ffffff; */
 }
 .login-form-title {
-  height: 36px;
+  /*height: 36px;*/
   display: flex;
   justify-content: center;
   align-items: center;
