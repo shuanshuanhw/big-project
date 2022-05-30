@@ -1,0 +1,3 @@
+1、VUE是MVVM模式工作,Lay UI是基于dom对象进行操作
+2、现成的UI组件，但和vue不能结合，因为他们更多的是利用DOM操作，借助于jQuery实现，而不是MVVM的思想。例 BootStrap4、LayUI、EasyUI、ZUI
+3、目前与Vue吻合的UI框架也非常的多，element-ui、i-view

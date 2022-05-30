@@ -1,0 +1,25 @@
+1、开启筛选功能
+给对应列添加filters属性即可开启该列的筛选。filters是一个数组，数组每一项中有两个属性text和value，分别是呈现的数据，和对应的标识。
+两个方法：
+1- 直接写
+:filters="[
+          { text: '王小虎', value: '王小虎' },
+          { text: '张小花', value: '张小花' },
+          { text: '赵小二', value: '赵小二' },
+          { text: '钱大牛', value: '钱大牛' },
+        ]"
+2- 通过方法，这种没验证过，我觉得应该是通过定义一个对象才对
+//js部分
+      getfilterNameItem() {
+          let apiArr = [  // 从后端获取筛选的字段
+            { text: "王小虎", value: "王小虎" },
+            { text: "张小花", value: "张小花" },
+            { text: "赵小二", value: "赵小二" },
+            { text: "钱大牛", value: "钱大牛" },
+          ];
+          return apiArr; // return返回去
+      }
+
+2、在table的属性上加上filter-change监听方法
+filter-change这个方法可以监听筛选项的变化。在需要筛选的列上加入column-key属性，这个就是在这个监听方法里取到的，用以呈现出当时需要留下的值。
+接下来需要我们进行处理，写代码，饿了么应该对筛查功能就支持到这个程度了。

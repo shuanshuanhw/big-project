@@ -1,0 +1,5 @@
+1、新建一个文件夹成为主文件夹，在主文件夹下面，一般新建src文件夹保存js文件，其中一个js文件是主入口，这些js文件以模块化的方式关联。新建public用以保存html文件。
+2、在终端运行命令 npm init -y ，初始化项目，会生成 项目描述文件 package.json
+3、安装webpack，安装webpack之前需要先安装一个npm的包管理的配置文件，就是第二步骤。
+npm i webpack webpack-cli -D，将产生一个package-lock.json文件，用来锁定各个插件的版本，和一个node_modules文件夹，用来保存插件。
+4、指定一个入口文件，进行webpack打包，npx webpack ./src/main.js --mode=development，指定为开发者模式
