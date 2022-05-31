@@ -7,13 +7,16 @@ import lib.sdlib.jsb.mark.dao.DataSdlibStatiMapper;
 import lib.sdlib.jsb.mark.dao.LikeTimesMapper;
 import lib.sdlib.jsb.mark.entity.DataSdlibStati;
 import lib.sdlib.jsb.mark.entity.LikeTimes;
+import lib.sdlib.jsb.mark.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.*;
 
@@ -34,7 +37,23 @@ public class AC {
     @Autowired
     LikeTimesMapper likeTimesMapper;
 
+    /**
+     * 登陆
+     * @param user
+     * @return
+     */
 
+    @ResponseBody
+    @PostMapping("/agv/login")
+    public Result login(@RequestBody @Valid User user, BindingResult errors)
+    {
+        if (errors.hasErrors()) {
+            return Result.error(errors.getFieldError().getDefaultMessage());
+        }
+        log.info("进来了");
+        log.info(user.toString());
+        return Result.ok();
+    }
     @ResponseBody
     @PostMapping("/agv/submitFruition")
     public Result submitFruition(@RequestBody List<DataSdlibStati> dataArray)

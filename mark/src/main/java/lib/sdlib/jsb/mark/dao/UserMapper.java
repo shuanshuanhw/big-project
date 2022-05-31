@@ -29,7 +29,7 @@ public interface UserMapper {
         "#{login_name,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR}, ",
         "#{user_type,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, ",
         "#{phonenumber,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{avatar,jdbcType=VARCHAR}, ",
-        "#{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, ",
+        "#{password,jdbcType=LONGVARBINARY}, #{salt,jdbcType=VARCHAR}, ",
         "#{status,jdbcType=CHAR}, #{del_flag,jdbcType=CHAR}, #{login_ip,jdbcType=VARCHAR}, ",
         "#{login_date,jdbcType=TIMESTAMP}, #{pwd_update_date,jdbcType=TIMESTAMP}, ",
         "#{create_by,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, ",
@@ -37,31 +37,6 @@ public interface UserMapper {
         "#{remark,jdbcType=VARCHAR})"
     })
     int insert(User row);
-
-
-    @Insert({
-            "insert into user (user_id, dept_id, ",
-            "login_name, user_name, ",
-            "user_type, email, ",
-            "phonenumber, sex, avatar, ",
-            "password, salt, ",
-            "status, del_flag, login_ip, ",
-            "login_date, pwd_update_date, ",
-            "create_by, create_time, ",
-            "update_by, update_time, ",
-            "remark)",
-            "values (#{user_id,jdbcType=BIGINT}, #{dept_id,jdbcType=BIGINT}, ",
-            "#{login_name,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR}, ",
-            "#{user_type,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, ",
-            "#{phonenumber,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{avatar,jdbcType=VARCHAR}, ",
-            "#{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, ",
-            "#{status,jdbcType=CHAR}, #{del_flag,jdbcType=CHAR}, #{login_ip,jdbcType=VARCHAR}, ",
-            "#{login_date,jdbcType=TIMESTAMP}, #{pwd_update_date,jdbcType=TIMESTAMP}, ",
-            "#{create_by,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, ",
-            "#{update_by,jdbcType=VARCHAR}, #{update_time,jdbcType=TIMESTAMP}, ",
-            "#{remark,jdbcType=VARCHAR})"
-    })
-    int insert1(User row);
 
 
     @Select({
@@ -82,7 +57,7 @@ public interface UserMapper {
         @Result(column="phonenumber", property="phonenumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="sex", property="sex", jdbcType=JdbcType.CHAR),
         @Result(column="avatar", property="avatar", jdbcType=JdbcType.VARCHAR),
-        @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR),
+        @Result(column="password", property="password", jdbcType=JdbcType.LONGVARBINARY),
         @Result(column="salt", property="salt", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.CHAR),
         @Result(column="del_flag", property="del_flag", jdbcType=JdbcType.CHAR),
@@ -114,7 +89,7 @@ public interface UserMapper {
         @Result(column="phonenumber", property="phonenumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="sex", property="sex", jdbcType=JdbcType.CHAR),
         @Result(column="avatar", property="avatar", jdbcType=JdbcType.VARCHAR),
-        @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR),
+        @Result(column="password", property="password", jdbcType=JdbcType.LONGVARBINARY),
         @Result(column="salt", property="salt", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.CHAR),
         @Result(column="del_flag", property="del_flag", jdbcType=JdbcType.CHAR),
@@ -139,7 +114,7 @@ public interface UserMapper {
           "phonenumber = #{phonenumber,jdbcType=VARCHAR},",
           "sex = #{sex,jdbcType=CHAR},",
           "avatar = #{avatar,jdbcType=VARCHAR},",
-          "password = #{password,jdbcType=VARCHAR},",
+          "password = #{password,jdbcType=LONGVARBINARY},",
           "salt = #{salt,jdbcType=VARCHAR},",
           "status = #{status,jdbcType=CHAR},",
           "del_flag = #{del_flag,jdbcType=CHAR},",

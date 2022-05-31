@@ -1,8 +1,8 @@
 function loginApi(data) {
   return $axios({
-    'url': '/login',
+    'url': '/agv/login',
     'method': 'post',
-    data
+    'data': data
   })
 }
 

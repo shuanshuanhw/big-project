@@ -13,7 +13,7 @@
     <style>
     </style>
 </head>
-<body>
+<body class="main">
 <div class="login" id="login-app">
     <div class="login-box">
 <!--        <img src="image/login/login-l.png" alt="">-->
@@ -26,8 +26,8 @@
                     <div>顺德图书馆 </div>
                     <div style="font-size:22px;font-weight: 400!important;color: #663333;"> &nbsp; 综合投票系统</div>
                 </div>
-                <el-form-item prop="username">
-                    <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号" maxlength="20"
+                <el-form-item prop="login_name">
+                    <el-input v-model="loginForm.login_name" type="text" auto-complete="off" placeholder="账号" maxlength="20"
                               prefix-icon="iconfont icon-user" />
                 </el-form-item>
                 <el-form-item prop="password">
@@ -80,10 +80,11 @@
         data() {
             return {
                 loginForm:{
-                    username: 'admin',
+                    login_name: 'admin',
                     password: '123456'
                 },
-                loading: false
+                loading: false,
+                timer: null,
             }
         },
         computed: {
@@ -103,30 +104,58 @@
                     }
                 }
                 return {
-                    'username': [{ 'validator': validateUsername, 'trigger': 'blur' }],
+                    'login_name': [{ 'validator': validateUsername, 'trigger': 'blur' }],
                     'password': [{ 'validator': validatePassword, 'trigger': 'blur' }]
                 }
             }
         },
         created() {
+          //  alert('222222222222')
+            ///
+
+            // clearTimeout(this.timer);  //清除延迟执行
+            //
+            // this.timer = setTimeout(()=>{   //设置延迟执行
+            //     console.log('111111111111111')
+            // },3000);
+            ///
+
         },
         methods: {
+
+
             // async表示是一个异步函数
             async handleLogin() {
+
+
+
                 //　ref 写在标签上时：this.$refs.名字  获取的是标签对应的dom元素
                 this.$refs.loginForm.validate(async (valid) => {
                     if (valid) {
                         this.loading = true
-                        let res = await loginApi(this.loginForm)// await表示要等其它在后面的函数执行完才继续执行这个
-                        if (String(res.code) === '1') {
-                            // 登陆成功后，把个人信息放在浏览器存储区域
-                            localStorage.setItem('userInfo',JSON.stringify(res.data))
-                            window.location.href= '/index'
-                        } else {
-                            // 这个应该是ｖｕｅ内置的函数
-                            this.$message.error(res.msg)
-                            this.loading = false
-                        }
+
+                        await loginApi(this.loginForm).then(req =>
+                        {
+                            if (req.data.flag) {
+                                console.log(req.data)
+                                this.$message.success(req.data.message)
+                                // 登陆成功后，把个人信息放在浏览器存储区域
+                                localStorage.setItem('userInfo',JSON.stringify(req.data))
+                                window.location.href= '/index'
+                            } else {
+                                // 这个应该是ｖｕｅ内置的函数
+                                this.$message.error(req.data.message)
+                                this.loading = false
+                            }
+                        }).catch((err) => {
+                            if (err == "401")
+                                err = "您可能没有相关权限，或者权限已过期，可尝试重新登陆、更换帐号或联系管理员";
+                            this.$message.error(err);
+                        });
+
+                        // await表示要等其它在后面的函数执行完才继续执行这个
+                        // if (String(res.code) === '1') {
+
                     }
                 })
             }

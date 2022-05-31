@@ -154,10 +154,13 @@
 <!-- 引入axios -->
 <script src="plugins/axios/axios.min.js"></script>
 <script src="layui/layui.js"></script>
-
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="js/request.js"></script>
 <script src="api/index.js"></script>
 <script>
+
+
+
 
 
 
@@ -179,9 +182,33 @@
         computed: {},
         created() {
             this.start();
+            // const loading = {
+            //     loadingInstance: null,
+            //     open: function () {
+            //         // if (this.loadingInstance === null) { this.loadingInstance = Loading.service({ target: '.main', text: '大力加载中' }); }
+            //         if (this.loadingInstance === null) {
+            //             this.loadingInstance = Loading.service({
+            //                 lock: true,
+            //                 text: '加载中……',
+            //                 background: 'rgba(0, 0, 0, 0.7)'
+            //             }); }
+            //
+            //     },
+            //     close: function () {
+            //         if (this.loadingInstance !== null) {
+            //             this.loadingInstance.close()
+            //
+            //         }
+            //         this.loadingInstance = null
+            //     }
+            // }
+            // loading.open();
 
-
-
+            this.$loading.service({
+                                    lock: true,
+                                    text: '加载中……',
+                                    background: 'rgba(0, 0, 0, 0.7)'
+                                });
         },
         beforeDestroy() {
         },
