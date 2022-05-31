@@ -10,3 +10,7 @@ CONVERT (AES_DECRYPT(FROM_BASE64("2ro97uTO1+U7/uJWvKunug=="),"key") USING utf8)
 
 HEX(AES_ENCRYPT("123abc张三","key"))
 CONVERT (AES_DECRYPT(UNHEX("90CAC577B7E1E2F31A5403A68DA168F0"),"key") USING utf8)
+
+
+3、在springboot中加解密个人觉得更方便
+https://blog.csdn.net/Zack_tzh/article/details/112175232

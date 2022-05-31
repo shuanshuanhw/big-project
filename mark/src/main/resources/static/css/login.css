@@ -82,13 +82,13 @@
   font-size: 14px;
   border: 0;
   /*background-color: #ffc200;*/
-  background-color: #B1B18B;
+  background-color: #663333;
   color: whitesmoke;
 ;
 }
 .login-btn:hover,
 .login-btn:focus {
-  /* background: #FFC200; */
+   background: #664D33;
   /* color: #ffffff; */
 }
 .login-form-title {

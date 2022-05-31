@@ -34,6 +34,7 @@ public class AC {
     @Autowired
     LikeTimesMapper likeTimesMapper;
 
+
     @ResponseBody
     @PostMapping("/agv/submitFruition")
     public Result submitFruition(@RequestBody List<DataSdlibStati> dataArray)

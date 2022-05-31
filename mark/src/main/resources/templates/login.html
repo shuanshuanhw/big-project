@@ -24,7 +24,7 @@
 <!--                <div style="text-align: right;margin-top: 10px;margin-bottom: 50px;"><img src="image/login/logo.png" style="width:130px;" alt="" /></div>-->
                 <div class="login-form-title" style="font-size: 25px !important;font-weight: 600!important;">
                     <div>顺德图书馆 </div>
-                    <div style="font-size:22px;font-weight: 400!important;color: #999966;"> &nbsp;-- 综合投票系统</div>
+                    <div style="font-size:22px;font-weight: 400!important;color: #663333;"> &nbsp; 综合投票系统</div>
                 </div>
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号" maxlength="20"
@@ -63,16 +63,17 @@
 <script src="layui/layui.js"></script>
 
 <script src="js/request.js"></script>
+<script src="api/login.js"></script>
 
 <script>
-    $.validator.setDefaults({
-        submitHandler: function() {
-            alert("提交事件!");
-        }
-    });
-    $().ready(function() {
-        $("#commentForm").validate();
-    });
+    // $.validator.setDefaults({
+    //     submitHandler: function() {
+    //         alert("提交事件!");
+    //     }
+    // });
+    // $().ready(function() {
+    //     $("#commentForm").validate();
+    // });
 
     new Vue({
         el: '#login-app',
@@ -120,7 +121,7 @@
                         if (String(res.code) === '1') {
                             // 登陆成功后，把个人信息放在浏览器存储区域
                             localStorage.setItem('userInfo',JSON.stringify(res.data))
-                            window.location.href= '/backend/index.html'
+                            window.location.href= '/index'
                         } else {
                             // 这个应该是ｖｕｅ内置的函数
                             this.$message.error(res.msg)
