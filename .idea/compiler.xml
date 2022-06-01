@@ -10,6 +10,7 @@
         <module name="wx-back" />
         <module name="test-land" />
         <module name="test-jdbc" />
+        <module name="test-photo-base64" />
         <module name="test-layui" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
       <module name="test-jpa" target="1.8" />
       <module name="test-land" target="1.8" />
       <module name="test-layui" target="1.8" />
+      <module name="test-photo-base64" target="1.8" />
       <module name="test_shiro" target="1.8" />
       <module name="wx-back" target="1.8" />
     </bytecodeTargetLevel>
@@ -28,6 +30,7 @@
       <module name="test-jpa" options="-parameters" />
       <module name="test-land" options="-parameters" />
       <module name="test-layui" options="-parameters" />
+      <module name="test-photo-base64" options="-parameters" />
       <module name="test_shiro" options="-parameters" />
       <module name="wx-back" options="-parameters" />
     </option>
