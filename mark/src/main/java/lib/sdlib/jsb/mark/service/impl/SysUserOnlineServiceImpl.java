@@ -22,8 +22,8 @@ import java.util.List;
 @Service
 public class SysUserOnlineServiceImpl implements ISysUserOnlineService
 {
-    @Autowired
-    private SysUserOnlineMapper userOnlineDao;
+//    @Autowired
+//    private SysUserOnlineMapper userOnlineDao;
 
     @Autowired
     private EhCacheManager ehCacheManager;
@@ -37,7 +37,8 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     @Override
     public SysUserOnline selectOnlineById(String sessionId)
     {
-        return userOnlineDao.selectOnlineById(sessionId);
+
+        return null;//userOnlineDao.selectOnlineById(sessionId);
     }
 
     /**
@@ -52,7 +53,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
         SysUserOnline userOnline = selectOnlineById(sessionId);
         if (StringUtils.isNotNull(userOnline))
         {
-            userOnlineDao.deleteOnlineById(sessionId);
+          //  userOnlineDao.deleteOnlineById(sessionId);
         }
     }
 
@@ -70,7 +71,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
             SysUserOnline userOnline = selectOnlineById(sessionId);
             if (StringUtils.isNotNull(userOnline))
             {
-                userOnlineDao.deleteOnlineById(sessionId);
+              //  userOnlineDao.deleteOnlineById(sessionId);
             }
         }
     }
@@ -83,7 +84,8 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     @Override
     public void saveOnline(SysUserOnline online)
     {
-        userOnlineDao.saveOnline(online);
+
+        //userOnlineDao.saveOnline(online);
     }
 
     /**
@@ -94,7 +96,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     @Override
     public List<SysUserOnline> selectUserOnlineList(SysUserOnline userOnline)
     {
-        return userOnlineDao.selectUserOnlineList(userOnline);
+        return null;//userOnlineDao.selectUserOnlineList(userOnline);
     }
 
     /**
@@ -105,7 +107,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     @Override
     public void forceLogout(String sessionId)
     {
-        userOnlineDao.deleteOnlineById(sessionId);
+      //  userOnlineDao.deleteOnlineById(sessionId);
     }
 
     /**
@@ -134,7 +136,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     @Override
     public List<SysUserOnline> selectOnlineByExpired(Date expiredDate)
     {
-        String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
-        return userOnlineDao.selectOnlineByExpired(lastAccessTime);
+  //      String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
+        return null;//userOnlineDao.selectOnlineByExpired(lastAccessTime);
     }
 }

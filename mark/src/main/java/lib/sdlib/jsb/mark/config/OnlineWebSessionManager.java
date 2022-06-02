@@ -1,6 +1,7 @@
 package lib.sdlib.jsb.mark.config;
 
 import lib.sdlib.jsb.mark.common.ShiroConstants;
+import lib.sdlib.jsb.mark.service.ISysUserOnlineService;
 import lib.sdlib.jsb.mark.utils.BeanUtils;
 import lib.sdlib.jsb.mark.utils.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -92,75 +93,75 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager
     @Override
     public void validateSessions()
     {
-        if (log.isInfoEnabled())
-        {
-            log.info("invalidation sessions...");
-        }
-
-        int invalidCount = 0;
-
-        int timeout = (int) this.getGlobalSessionTimeout();
-        if (timeout < 0)
-        {
-            // 永不过期不进行处理
-            return;
-        }
-        Date expiredDate = DateUtils.addMilliseconds(new Date(), 0 - timeout);
-        ISysUserOnlineService userOnlineService = SpringUtils.getBean(ISysUserOnlineService.class);
-        List<SysUserOnline> userOnlineList = userOnlineService.selectOnlineByExpired(expiredDate);
-        // 批量过期删除
-        List<String> needOfflineIdList = new ArrayList<String>();
-        for (SysUserOnline userOnline : userOnlineList)
-        {
-            try
-            {
-                SessionKey key = new DefaultSessionKey(userOnline.getSessionId());
-                Session session = retrieveSession(key);
-                if (session != null)
-                {
-                    throw new InvalidSessionException();
-                }
-            }
-            catch (InvalidSessionException e)
-            {
-                if (log.isDebugEnabled())
-                {
-                    boolean expired = (e instanceof ExpiredSessionException);
-                    String msg = "Invalidated session with id [" + userOnline.getSessionId() + "]"
-                            + (expired ? " (expired)" : " (stopped)");
-                    log.debug(msg);
-                }
-                invalidCount++;
-                needOfflineIdList.add(userOnline.getSessionId());
-                userOnlineService.removeUserCache(userOnline.getLoginName(), userOnline.getSessionId());
-            }
-
-        }
-        if (needOfflineIdList.size() > 0)
-        {
-            try
-            {
-                userOnlineService.batchDeleteOnline(needOfflineIdList);
-            }
-            catch (Exception e)
-            {
-                log.error("batch delete db session error.", e);
-            }
-        }
-
-        if (log.isInfoEnabled())
-        {
-            String msg = "Finished invalidation session.";
-            if (invalidCount > 0)
-            {
-                msg += " [" + invalidCount + "] sessions were stopped.";
-            }
-            else
-            {
-                msg += " No sessions were stopped.";
-            }
-            log.info(msg);
-        }
+//        if (log.isInfoEnabled())
+//        {
+//            log.info("invalidation sessions...");
+//        }
+//
+//        int invalidCount = 0;
+//
+//        int timeout = (int) this.getGlobalSessionTimeout();
+//        if (timeout < 0)
+//        {
+//            // 永不过期不进行处理
+//            return;
+//        }
+//        Date expiredDate = DateUtils.addMilliseconds(new Date(), 0 - timeout);
+//        ISysUserOnlineService userOnlineService = SpringUtils.getBean(ISysUserOnlineService.class);
+//        List<SysUserOnline> userOnlineList = userOnlineService.selectOnlineByExpired(expiredDate);
+//        // 批量过期删除
+//        List<String> needOfflineIdList = new ArrayList<String>();
+//        for (SysUserOnline userOnline : userOnlineList)
+//        {
+//            try
+//            {
+//                SessionKey key = new DefaultSessionKey(userOnline.getSessionId());
+//                Session session = retrieveSession(key);
+//                if (session != null)
+//                {
+//                    throw new InvalidSessionException();
+//                }
+//            }
+//            catch (InvalidSessionException e)
+//            {
+//                if (log.isDebugEnabled())
+//                {
+//                    boolean expired = (e instanceof ExpiredSessionException);
+//                    String msg = "Invalidated session with id [" + userOnline.getSessionId() + "]"
+//                            + (expired ? " (expired)" : " (stopped)");
+//                    log.debug(msg);
+//                }
+//                invalidCount++;
+//                needOfflineIdList.add(userOnline.getSessionId());
+//                userOnlineService.removeUserCache(userOnline.getLoginName(), userOnline.getSessionId());
+//            }
+//
+//        }
+//        if (needOfflineIdList.size() > 0)
+//        {
+//            try
+//            {
+//                userOnlineService.batchDeleteOnline(needOfflineIdList);
+//            }
+//            catch (Exception e)
+//            {
+//                log.error("batch delete db session error.", e);
+//            }
+//        }
+//
+//        if (log.isInfoEnabled())
+//        {
+//            String msg = "Finished invalidation session.";
+//            if (invalidCount > 0)
+//            {
+//                msg += " [" + invalidCount + "] sessions were stopped.";
+//            }
+//            else
+//            {
+//                msg += " No sessions were stopped.";
+//            }
+//            log.info(msg);
+//        }
 
     }
 

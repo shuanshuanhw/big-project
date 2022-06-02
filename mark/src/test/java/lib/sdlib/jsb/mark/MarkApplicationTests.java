@@ -10,11 +10,20 @@ import lib.sdlib.jsb.mark.entity.User;
 import lib.sdlib.jsb.mark.utils.SensitiveUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.xml.ConfigurationParser;
+import org.mybatis.generator.exception.InvalidConfigurationException;
+import org.mybatis.generator.exception.XMLParserException;
+import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.sql.SQLException;
 import java.util.*;
 
 @Slf4j
@@ -87,5 +96,19 @@ class MarkApplicationTests {
 
 
 
+
+    }
+
+    @Test
+    void testGn() throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
+        List<String> warnings = new ArrayList<>();
+        // 如果已经存在生成过的文件是否进行覆盖
+        boolean overwrite = true;
+        File configFile = new File(lib.sdlib.jsb.mark.test.Test.class.getResource("/generator-configuration.xml").getPath());
+        ConfigurationParser cp = new ConfigurationParser(warnings);
+        Configuration config = cp.parseConfiguration(configFile);
+        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+        MyBatisGenerator generator = new MyBatisGenerator(config, callback, warnings);
+        generator.generate(null);
     }
 }
