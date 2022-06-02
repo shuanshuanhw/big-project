@@ -7,7 +7,9 @@ package lib.sdlib.jsb.mark.config;
  * 创建人： Administrator
  */
 
-import cn.hutool.http.useragent.UserAgent;
+import eu.bitwalker.useragentutils.UserAgent;
+import lib.sdlib.jsb.mark.utils.IpUtils;
+import lib.sdlib.jsb.mark.utils.ServletUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.session.mgt.SessionFactory;

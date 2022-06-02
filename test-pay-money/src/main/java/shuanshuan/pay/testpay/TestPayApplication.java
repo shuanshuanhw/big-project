@@ -1,13 +1,15 @@
-package shuan.test.testphotobase64;
+package shuanshuan.pay.testpay;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
 
+@Controller
 @SpringBootApplication
-public class TestPhotoBase64Application {
+public class TestPayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TestPhotoBase64Application.class, args);
+        SpringApplication.run(TestPayApplication.class, args);
     }
 
 

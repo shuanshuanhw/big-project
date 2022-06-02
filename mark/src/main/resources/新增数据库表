@@ -64,3 +64,23 @@ create table dept (
   update_time       datetime                                   comment '更新时间',
   primary key (dept_id)
 ) engine=innodb auto_increment=200 comment = '部门表';
+
+
+-- ----------------------------
+-- 4、在线用户记录
+-- ----------------------------
+drop table if exists user_online;
+create table user_online (
+  sessionId         varchar(50)   default ''                comment '用户会话id',
+  login_name        varchar(50)   default ''                comment '登录账号',
+  dept_name         varchar(50)   default ''                comment '部门名称',
+  ipaddr            varchar(128)  default ''                comment '登录IP地址',
+  login_location    varchar(255)  default ''                comment '登录地点',
+  browser           varchar(50)   default ''                comment '浏览器类型',
+  os                varchar(50)   default ''                comment '操作系统',
+  status            varchar(10)   default ''                comment '在线状态on_line在线off_line离线',
+  start_timestamp   datetime                                comment 'session创建时间',
+  last_access_time  datetime                                comment 'session最后访问时间',
+  expire_time       int(5)        default 0                 comment '超时时间，单位为分钟',
+  primary key (sessionId)
+) engine=innodb comment = '在线用户记录';

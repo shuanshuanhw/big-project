@@ -76,6 +76,14 @@
             <version>${thymeleaf.extras.shiro.version}</version>
         </dependency>
 
+<!--        Utility classes to handle user-agents.-->
+        <!-- https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.21</version>
+        </dependency>
+
 
         <!-- io常用工具类 -->
         <dependency>

@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/test-jdbc/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-land/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test-pay-money/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-photo-base64/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/wx-back/src/main/java" charset="UTF-8" />
   </component>

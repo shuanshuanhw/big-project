@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/test-jdbc/test-jdbc.iml" filepath="$PROJECT_DIR$/test-jdbc/test-jdbc.iml" />
       <module fileurl="file://$PROJECT_DIR$/test-land/test-land.iml" filepath="$PROJECT_DIR$/test-land/test-land.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo/test-layui.iml" filepath="$PROJECT_DIR$/demo/test-layui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-photo-base64/test-pay.iml" filepath="$PROJECT_DIR$/test-photo-base64/test-pay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-pay-money/test-pay-money.iml" filepath="$PROJECT_DIR$/test-pay-money/test-pay-money.iml" />
       <module fileurl="file://$PROJECT_DIR$/test-photo-base64/test-photo-base64.iml" filepath="$PROJECT_DIR$/test-photo-base64/test-photo-base64.iml" />
       <module fileurl="file://$PROJECT_DIR$/wx-back/wx-back.iml" filepath="$PROJECT_DIR$/wx-back/wx-back.iml" />
     </modules>
