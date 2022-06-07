@@ -7,6 +7,9 @@ package lib.sdlib.jsb.mark.config;
  * 创建人： Administrator
  */
 
+import lib.sdlib.jsb.mark.entity.User;
+import lib.sdlib.jsb.mark.service.ISysRoleService;
+import lib.sdlib.jsb.mark.utils.ShiroUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -33,8 +36,8 @@ public class UserRealm extends AuthorizingRealm
 //    @Autowired
 //    private ISysMenuService menuService;
 //
-//    @Autowired
-//    private ISysRoleService roleService;
+    @Autowired
+    private ISysRoleService roleService;
 //
 //    @Autowired
 //    private SysLoginService loginService;
@@ -45,27 +48,27 @@ public class UserRealm extends AuthorizingRealm
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0)
     {
-//        SysUser user = ShiroUtils.getSysUser();
-//        // 角色列表
-//        Set<String> roles = new HashSet<String>();
-//        // 功能列表
-//        Set<String> menus = new HashSet<String>();
+        User user = ShiroUtils.getSysUser();
+        // 角色列表
+        Set<String> roles = new HashSet<String>();
+        // 功能列表
+        Set<String> menus = new HashSet<String>();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//        // 管理员拥有所有权限
-//        if (user.isAdmin())
-//        {
-//            info.addRole("admin");
-//            info.addStringPermission("*:*:*");
-//        }
-//        else
-//        {
+        // 管理员拥有所有权限
+        if (user.isAdmin())
+        {
+            info.addRole("admin");
+            info.addStringPermission("*:*:*");
+        }
+        else
+        {
 //            roles = roleService.selectRoleKeys(user.getUserId());
 //            menus = menuService.selectPermsByUserId(user.getUserId());
 //            // 角色加入AuthorizationInfo认证对象
 //            info.setRoles(roles);
 //            // 权限加入AuthorizationInfo认证对象
 //            info.setStringPermissions(menus);
-//        }
+        }
         return info;
     }
 

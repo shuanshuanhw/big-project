@@ -91,12 +91,6 @@ class MarkApplicationTests {
      //   System.out.println("publicKey:" + arr[1]);
 //        System.out.println("password:" + ConfigTools.encrypt(passwordMap.get("private"), password));
 //        System.out.println(ConfigTools.decrypt(passwordMap.get("public"),ConfigTools.encrypt(passwordMap.get("private"), password)));
-
-
-
-
-
-
     }
 
     @Test

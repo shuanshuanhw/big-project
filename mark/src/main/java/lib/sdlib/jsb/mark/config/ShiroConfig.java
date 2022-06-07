@@ -35,7 +35,7 @@ import java.util.Map;
  * 
  * @author ruoyi
  */
-@Configuration
+//@Configuration
 public class ShiroConfig
 {
     /**
