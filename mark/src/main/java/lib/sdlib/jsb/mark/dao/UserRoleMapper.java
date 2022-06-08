@@ -29,4 +29,12 @@ public interface UserRoleMapper {
         @Result(column="role_id", property="role_id", jdbcType=JdbcType.BIGINT, id=true)
     })
     List<UserRole> selectAll();
+
+    @Select({
+     "select",
+     "role_id",
+     "from user_role",
+     "where user_id = #{user_id,jdbcType=BIGINT}",
+    })
+    List<String> selectRoleByUserId(Long userId);
 }

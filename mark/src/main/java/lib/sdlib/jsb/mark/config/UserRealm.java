@@ -7,8 +7,14 @@ package lib.sdlib.jsb.mark.config;
  * 创建人： Administrator
  */
 
+import lib.sdlib.jsb.mark.dao.RoleMapper;
+import lib.sdlib.jsb.mark.dao.RoleMenuMapper;
+import lib.sdlib.jsb.mark.dao.UserRoleMapper;
 import lib.sdlib.jsb.mark.entity.User;
+import lib.sdlib.jsb.mark.entity.UserRole;
+import lib.sdlib.jsb.mark.exception.*;
 import lib.sdlib.jsb.mark.service.ISysRoleService;
+import lib.sdlib.jsb.mark.service.SysLoginService;
 import lib.sdlib.jsb.mark.utils.ShiroUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -22,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,14 +40,23 @@ public class UserRealm extends AuthorizingRealm
 {
     private static final Logger log = LoggerFactory.getLogger(UserRealm.class);
 
+    @Autowired
+    RoleMapper roleMapper;
+
+    @Autowired
+    RoleMenuMapper roleMenuMapper;
+
+    @Autowired
+    UserRoleMapper userRoleMapper;
+
 //    @Autowired
 //    private ISysMenuService menuService;
-//
+
     @Autowired
     private ISysRoleService roleService;
-//
-//    @Autowired
-//    private SysLoginService loginService;
+
+    @Autowired
+    private SysLoginService loginService;
 
     /**
      * 授权
@@ -52,7 +68,7 @@ public class UserRealm extends AuthorizingRealm
         // 角色列表
         Set<String> roles = new HashSet<String>();
         // 功能列表
-        Set<String> menus = new HashSet<String>();
+    //    Set<String> menus = new HashSet<String>();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 管理员拥有所有权限
         if (user.isAdmin())
@@ -62,10 +78,16 @@ public class UserRealm extends AuthorizingRealm
         }
         else
         {
-//            roles = roleService.selectRoleKeys(user.getUserId());
+            List<String> userRoles = userRoleMapper.selectRoleByUserId(user.getUser_id());
+            for(String userRole: userRoles)
+            {
+                roles.add(userRole);
+            }
+  //          roles = roleService.selectRoleKeys(user.getUser_id());
+
 //            menus = menuService.selectPermsByUserId(user.getUserId());
-//            // 角色加入AuthorizationInfo认证对象
-//            info.setRoles(roles);
+            // 角色加入AuthorizationInfo认证对象
+            info.setRoles(roles);
 //            // 权限加入AuthorizationInfo认证对象
 //            info.setStringPermissions(menus);
         }
@@ -78,50 +100,50 @@ public class UserRealm extends AuthorizingRealm
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException
     {
-//        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-//        String username = upToken.getUsername();
-//        String password = "";
-//        if (upToken.getPassword() != null)
-//        {
-//            password = new String(upToken.getPassword());
-//        }
-//
-//        SysUser user = null;
-//        try
-//        {
-//            user = loginService.login(username, password);
-//        }
-//        catch (CaptchaException e)
-//        {
-//            throw new AuthenticationException(e.getMessage(), e);
-//        }
-//        catch (UserNotExistsException e)
-//        {
-//            throw new UnknownAccountException(e.getMessage(), e);
-//        }
-//        catch (UserPasswordNotMatchException e)
-//        {
-//            throw new IncorrectCredentialsException(e.getMessage(), e);
-//        }
-//        catch (UserPasswordRetryLimitExceedException e)
-//        {
-//            throw new ExcessiveAttemptsException(e.getMessage(), e);
-//        }
-//        catch (UserBlockedException e)
-//        {
-//            throw new LockedAccountException(e.getMessage(), e);
-//        }
-//        catch (RoleBlockedException e)
-//        {
-//            throw new LockedAccountException(e.getMessage(), e);
-//        }
-//        catch (Exception e)
-//        {
-//            log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
-//            throw new AuthenticationException(e.getMessage(), e);
-//        }
-//        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
-        SimpleAuthenticationInfo info = null;
+        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        String username = upToken.getUsername();
+        String password = "";
+        if (upToken.getPassword() != null)
+        {
+            password = new String(upToken.getPassword());
+        }
+
+        User user = null;
+        try
+        {
+            user = loginService.login(username, password);
+        }
+        catch (CaptchaException e)
+        {
+            throw new AuthenticationException(e.getMessage(), e);
+        }
+        catch (UserNotExistsException e)
+        {
+            throw new UnknownAccountException(e.getMessage(), e);
+        }
+        catch (UserPasswordNotMatchException e)
+        {
+            throw new IncorrectCredentialsException(e.getMessage(), e);
+        }
+        catch (UserPasswordRetryLimitExceedException e)
+        {
+            throw new ExcessiveAttemptsException(e.getMessage(), e);
+        }
+        catch (UserBlockedException e)
+        {
+            throw new LockedAccountException(e.getMessage(), e);
+        }
+        catch (RoleBlockedException e)
+        {
+            throw new LockedAccountException(e.getMessage(), e);
+        }
+        catch (Exception e)
+        {
+            log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
+            throw new AuthenticationException(e.getMessage(), e);
+        }
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+
         return info;
     }
 

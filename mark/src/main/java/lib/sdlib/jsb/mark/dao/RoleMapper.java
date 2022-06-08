@@ -51,6 +51,31 @@ public interface RoleMapper {
     })
     Role selectByPrimaryKey(Long role_id);
 
+
+    @Select({
+            "select",
+            "role_id, role_name, role_key, role_sort, data_scope, status, del_flag, create_by, ",
+            "create_time, update_by, update_time, remark",
+            "from role",
+            "where role_id = #{role_id,jdbcType=BIGINT}"
+    })
+    @Results({
+            @Result(column="role_id", property="role_id", jdbcType=JdbcType.BIGINT, id=true),
+            @Result(column="role_name", property="role_name", jdbcType=JdbcType.VARCHAR),
+            @Result(column="role_key", property="role_key", jdbcType=JdbcType.VARCHAR),
+            @Result(column="role_sort", property="role_sort", jdbcType=JdbcType.INTEGER),
+            @Result(column="data_scope", property="data_scope", jdbcType=JdbcType.CHAR),
+            @Result(column="status", property="status", jdbcType=JdbcType.CHAR),
+            @Result(column="del_flag", property="del_flag", jdbcType=JdbcType.CHAR),
+            @Result(column="create_by", property="create_by", jdbcType=JdbcType.VARCHAR),
+            @Result(column="create_time", property="create_time", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="update_by", property="update_by", jdbcType=JdbcType.VARCHAR),
+            @Result(column="update_time", property="update_time", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="remark", property="remark", jdbcType=JdbcType.VARCHAR)
+    })
+    List<Role> selectRoleList(Long role_id);
+
+
     @Select({
         "select",
         "role_id, role_name, role_key, role_sort, data_scope, status, del_flag, create_by, ",
