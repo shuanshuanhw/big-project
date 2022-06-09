@@ -83,7 +83,20 @@
 <script src="js/request.js"></script>
 <script src="api/login.js"></script>
 
-<script>
+<script th:inline="javascript">
+
+    var ctx = [[@{/}]];
+    var captchaType = [[${captchaType}]];
+
+    $(function() {
+       // 这样就能实现点击图片切换验证码的功能
+        $('.imgcode').click(function() {
+            var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
+            $(".imgcode").attr("src", url);
+        });
+    });
+
+
     $.validator.setDefaults({
         submitHandler: function() {
             alert("提交事件!");

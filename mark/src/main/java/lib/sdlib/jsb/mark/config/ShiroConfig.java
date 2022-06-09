@@ -293,7 +293,8 @@ public class ShiroConfig
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
-        filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/agv/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/login","anon");
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
         // 系统权限列表

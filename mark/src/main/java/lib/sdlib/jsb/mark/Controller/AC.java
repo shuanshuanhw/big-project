@@ -4,6 +4,7 @@ import cn.hutool.core.convert.Convert;
 import com.github.pagehelper.PageHelper;
 import com.sun.org.apache.regexp.internal.RE;
 import lib.sdlib.jsb.mark.common.Result;
+import lib.sdlib.jsb.mark.common.ShiroConstants;
 import lib.sdlib.jsb.mark.dao.DataSdlibStatiMapper;
 import lib.sdlib.jsb.mark.dao.LikeTimesMapper;
 import lib.sdlib.jsb.mark.entity.DataSdlibStati;
@@ -45,6 +46,11 @@ public class AC {
     @Value("${sys.account.allowRegister}")
     private boolean allowRegister;
 
+    @Value("${shiro.user.captchaEnabled}")
+    private boolean captchaEnabled;
+    @Value("${shiro.user.captchaType}")
+    private String captchaType;
+
     @Autowired
     DataSdlibStatiMapper dataSdlibStatiMapper;
     @Autowired
@@ -61,6 +67,11 @@ public class AC {
         }
         // 是否开启记住我
         // 如果rememberMe为true，登陆页面就显示一个记住我的多选框
+        // 通过在这里设定了是否显示验证码和验证码类型，在登陆页进行验证
+//        request.setAttribute(ShiroConstants.CURRENT_ENABLED, captchaEnabled);
+//        request.setAttribute(ShiroConstants.CURRENT_TYPE, captchaType);
+        mmap.put(ShiroConstants.CURRENT_ENABLED,captchaEnabled);
+        mmap.put(ShiroConstants.CURRENT_TYPE,captchaType);
         mmap.put("isRemembered", rememberMe);
         //  logger.info("rememberMe"+rememberMe);
         // 是否开启用户注册
