@@ -7,6 +7,7 @@ import lib.sdlib.jsb.mark.filter.*;
 import lib.sdlib.jsb.mark.utils.CipherUtils;
 import lib.sdlib.jsb.mark.utils.CustomShiroFilterFactoryBean;
 import lib.sdlib.jsb.mark.utils.StringUtils;
+import net.sf.ehcache.CacheManager;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -35,7 +36,7 @@ import java.util.Map;
  * 
  * @author ruoyi
  */
-//@Configuration
+@Configuration
 public class ShiroConfig
 {
     /**
@@ -128,14 +129,12 @@ public class ShiroConfig
     @Bean
     public EhCacheManager getEhCacheManager()
     {
-        net.sf.ehcache.CacheManager cacheManager = net.sf.ehcache.CacheManager.getCacheManager("ruoyi");
-
+        CacheManager cacheManager = CacheManager.getCacheManager("ruoyi");
         EhCacheManager em = new EhCacheManager();
-
         if (StringUtils.isNull(cacheManager))
         {
             // 如果cacheManager对象为空
-            em.setCacheManager(new net.sf.ehcache.CacheManager(getCacheManagerConfigFileInputStream()));
+            em.setCacheManager(new CacheManager(getCacheManagerConfigFileInputStream()));
             return em;
         }
         else
@@ -272,6 +271,10 @@ public class ShiroConfig
         // Shiro连接约束配置，即过滤链的定义
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 对静态资源设置匿名访问
+        filterChainDefinitionMap.put("/image/**","anon");
+        filterChainDefinitionMap.put("/api/**","anon");
+        filterChainDefinitionMap.put("/layui/**","anon");
+        filterChainDefinitionMap.put("/plugins/**","anon");
         filterChainDefinitionMap.put("/favicon.ico**", "anon");
         filterChainDefinitionMap.put("/ruoyi.png**", "anon");
         filterChainDefinitionMap.put("/html/**", "anon");

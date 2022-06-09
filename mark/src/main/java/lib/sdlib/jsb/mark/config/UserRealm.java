@@ -52,8 +52,8 @@ public class UserRealm extends AuthorizingRealm
 //    @Autowired
 //    private ISysMenuService menuService;
 
-    @Autowired
-    private ISysRoleService roleService;
+//    @Autowired
+//    private ISysRoleService roleService;
 
     @Autowired
     private SysLoginService loginService;

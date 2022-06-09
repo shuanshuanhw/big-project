@@ -1,6 +1,9 @@
 package lib.sdlib.jsb.mark.filter;
 
+
+import com.google.code.kaptcha.Constants;
 import lib.sdlib.jsb.mark.common.ShiroConstants;
+import lib.sdlib.jsb.mark.utils.StringUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
 
 import javax.servlet.ServletRequest;
@@ -37,10 +40,12 @@ public class CaptchaValidateFilter extends AccessControlFilter
     @Override
     public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception
     {
-
         // 通过在这里设定了是否显示验证码和验证码类型，在登陆页进行验证
         request.setAttribute(ShiroConstants.CURRENT_ENABLED, captchaEnabled);
         request.setAttribute(ShiroConstants.CURRENT_TYPE, captchaType);
+
+        // 这里调用一下父方法，父方法就是必须两个有一个为真
+        // return this.isAccessAllowed(request, response, mappedValue) || this.onAccessDenied(request, response, mappedValue);
         return super.onPreHandle(request, response, mappedValue);
     }
 
@@ -54,25 +59,29 @@ public class CaptchaValidateFilter extends AccessControlFilter
         {
             return true;
         }
+
+        // 如果是post并且是控制器login，那就检测一下req里面和session里面的验证码是否是一致的，防止验证码重复使用
         return validateResponse(httpServletRequest, httpServletRequest.getParameter(ShiroConstants.CURRENT_VALIDATECODE));
     }
 
     public boolean validateResponse(HttpServletRequest request, String validateCode)
     {
-//        Object obj = ShiroUtils.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-//        String code = String.valueOf(obj != null ? obj : "");
-//        // 验证码清除，防止多次使用。
-//        request.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
-//        if (StringUtils.isEmpty(validateCode) || !validateCode.equalsIgnoreCase(code))
-//        {
-//            return false;
-//        }
+        Object obj = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+//        Object obj = request.getSession().getAttribute(ShiroConstants.CURRENT_VALIDATECODE);
+        String code = String.valueOf(obj != null ? obj : "");
+        // 验证码清除，防止多次使用。
+        request.getSession().removeAttribute(ShiroConstants.CURRENT_VALIDATECODE);
+        if (StringUtils.isEmpty(validateCode) || !validateCode.equalsIgnoreCase(code))
+        {
+            return false;
+        }
         return true;
     }
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception
     {
+        // 这里为true才会接下来执行其它的过滤器和servlet，如果为false，就会终止执行
         request.setAttribute(ShiroConstants.CURRENT_CAPTCHA, ShiroConstants.CAPTCHA_ERROR);
         return true;
     }

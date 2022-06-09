@@ -1,5 +1,6 @@
 package lib.sdlib.jsb.mark.Controller;
 
+import cn.hutool.core.convert.Convert;
 import com.github.pagehelper.PageHelper;
 import com.sun.org.apache.regexp.internal.RE;
 import lib.sdlib.jsb.mark.common.Result;
@@ -8,14 +9,18 @@ import lib.sdlib.jsb.mark.dao.LikeTimesMapper;
 import lib.sdlib.jsb.mark.entity.DataSdlibStati;
 import lib.sdlib.jsb.mark.entity.LikeTimes;
 import lib.sdlib.jsb.mark.entity.User;
+import lib.sdlib.jsb.mark.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.*;
@@ -32,10 +37,41 @@ import java.util.*;
 //@RequestMapping("/agv")
 public class AC {
 
+    /**
+     * 是否开启记住我功能
+     */
+    @Value("${shiro.rememberMe.enabled: false}")
+    private boolean rememberMe;
+    @Value("${sys.account.allowRegister}")
+    private boolean allowRegister;
+
     @Autowired
     DataSdlibStatiMapper dataSdlibStatiMapper;
     @Autowired
     LikeTimesMapper likeTimesMapper;
+
+
+    @GetMapping("/login")
+    public String login(HttpServletRequest request, HttpServletResponse response, ModelMap mmap)
+    {
+        // 如果是Ajax请求，返回Json字符串。
+        if (ServletUtils.isAjaxRequest(request))
+        {
+            return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
+        }
+        // 是否开启记住我
+        // 如果rememberMe为true，登陆页面就显示一个记住我的多选框
+        mmap.put("isRemembered", rememberMe);
+        //  logger.info("rememberMe"+rememberMe);
+        // 是否开启用户注册
+        // Convert.toBool(configService.getKey("sys.account.registerUser") 将字符串转为布尔值
+        // 如果没有字符串，默认值就是false
+        // 将配置参数放在一个专门的数据库表上，需要的时候去取
+        mmap.put("isAllowRegister", allowRegister);
+        return "login";
+    }
+
+
 
     /**
      * 登陆
