@@ -7,6 +7,7 @@ import lib.sdlib.jsb.mark.exception.UserPasswordRetryLimitExceedException;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -68,6 +69,10 @@ public class SysPasswordService
 
     public boolean matches(User user, String newPassword)
     {
+        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+        textEncryptor.setPassword("retail_salt");
+        String decrypt = textEncryptor.decrypt(newPassword);
+
         return user.getPassword().equals(encryptPassword(user.getLogin_name(), newPassword, user.getSalt()));
     }
 

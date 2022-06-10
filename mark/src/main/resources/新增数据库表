@@ -43,6 +43,9 @@ create table user (
   primary key (user_id)
 ) engine=innodb auto_increment=100 comment = '用户信息表';
 
+insert into user values(1,  103, 'admin', '顺德图书馆管理员', '00', '178650140@qq.com', '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '管理员');
+insert into user values(2,  105, 'shuanshuan',    '黄维', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '测试员');
+
 -- ----------------------------
 -- 3、部门表
 -- ----------------------------

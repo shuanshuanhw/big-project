@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.testjdbc.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="CHAR" property="username" />
+    <result column="truename" jdbcType="CHAR" property="truename" />
+    <result column="department" jdbcType="CHAR" property="department" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="Email" jdbcType="CHAR" property="email" />
+    <result column="company" jdbcType="CHAR" property="company" />
+    <result column="role" jdbcType="CHAR" property="role" />
+    <result column="if_del" jdbcType="CHAR" property="if_del" />
+    <result column="if_admin" jdbcType="CHAR" property="if_admin" />
+    <result column="ifdel" jdbcType="CHAR" property="ifdel" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="password" jdbcType="LONGVARBINARY" property="password" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (username, truename, department, 
+      phone, Email, company, role, 
+      if_del, if_admin, ifdel, token, 
+      sort, password)
+    values (#{username,jdbcType=CHAR}, #{truename,jdbcType=CHAR}, #{department,jdbcType=CHAR}, 
+      #{phone,jdbcType=CHAR}, #{email,jdbcType=CHAR}, #{company,jdbcType=CHAR}, #{role,jdbcType=CHAR}, 
+      #{if_del,jdbcType=CHAR}, #{if_admin,jdbcType=CHAR}, #{ifdel,jdbcType=CHAR}, #{token,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{password,jdbcType=LONGVARBINARY})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="User">
+    update user
+    set username = #{username,jdbcType=CHAR},
+      truename = #{truename,jdbcType=CHAR},
+      department = #{department,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR},
+      Email = #{email,jdbcType=CHAR},
+      company = #{company,jdbcType=CHAR},
+      role = #{role,jdbcType=CHAR},
+      if_del = #{if_del,jdbcType=CHAR},
+      if_admin = #{if_admin,jdbcType=CHAR},
+      ifdel = #{ifdel,jdbcType=CHAR},
+      token = #{token,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      password = #{password,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, username, truename, department, phone, Email, company, role, if_del, if_admin, 
+    ifdel, token, sort, password
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+<!--  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">-->
+<!--    select id, username, truename, department, phone, Email, company, role, if_del, if_admin,-->
+<!--           ifdel, token, sort, password-->
+<!--    from user-->
+<!--    where username = ${username}-->
+<!--  </select>-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, username, truename, department, phone, Email, company, role, if_del, if_admin, 
+    ifdel, token, sort, password
+    from user
+  </select>
+</mapper>

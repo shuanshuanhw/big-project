@@ -1,0 +1,31 @@
+1、原生jdbc
+1- 注册数据库驱动类型，Class.forName("oracle.jdbc.driver.OracleDriver");
+2- 获取连接对象，Connection conn = DriverManager.getConnection(URL, USER, PASS);
+3- 三个和数据库的交互对象
+Statement	        可以正常访问数据库，适用于运行静态 SQL 语句。 Statement 接口不接受参数。
+PreparedStatement	计划多次使用 SQL 语句， PreparedStatement 接口运行时接受输入的参数。
+CallableStatement	适用于当你要访问数据库存储过程的时候， CallableStatement 接口运行时也接受输入的参数。
+4- 查询数据得到ResultSet对象，ResultSet对象有很多方法，可以进行操作ResultSet里面的数据。
+5- 支持事务处理
+6- PreparedStatement对象比Statement对象的效率更高，并且可以防止SQL注入，所以我们一般都使用PreparedStatement。
+
+2、JdbcTemplate，在配置文件配置好各种参数，就能直接用
+
+1- 常用的执行函数
+（1）execute：可以执行所有SQL语句，一般用于执行DDL语句。
+（2）update：用于执行INSERT、UPDATE、DELETE等DML语句。
+（3）queryXXX：用于DQL数据查询语句。
+
+2- 事务，Spring的声明式事务控制Bean的类或方法上加@Transactional，事务控制粒度较大，只能控制在方法级别，不能控制到代码粒度级别。
+如果想要在方法内手动使用事务处理，答案就是TransactionTemplate。通过bean一下配置文件，在测试类里有代码。
+
+3- 不要在sql语句中使用加号拼接字符串的方式，直接填参数进去，似乎不会发生sql注入
+
+3、MyBatis，每个基于 MyBatis 的应用都是以一个 SqlSessionFactory 的实例为核心的。
+String resource = "org/mybatis/example/mybatis-config.xml";
+InputStream inputStream = Resources.getResourceAsStream(resource);
+SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+1、使用#不会出现sql注入的情况，$现在似乎不能用了，而且#现在也支持order by。
+
+

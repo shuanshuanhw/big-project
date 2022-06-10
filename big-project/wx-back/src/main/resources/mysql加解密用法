@@ -1,0 +1,16 @@
+1、目前官方建议使用AES_ENCRYPT，AES_DECRYPT进行加解密
+AES_ENCRYPT("123abc","key") 第一个是密码，第二个是加密钥匙
+从实际测试来说，不能直接解密，需要使用CONVERT (AES_DECRYPT(worker_password, 'shuanshuan') USING utf8)的方法
+第一个为密码，第二个为加密钥匙
+
+2、在加密后，使用使用TO_BASE64,FROM_BASE64或者 HEX，UNHEX（16进制转换），进一步转换成不容易猜到的密文
+用法如下
+TO_BASE64(AES_ENCRYPT("123abc","key"))
+CONVERT (AES_DECRYPT(FROM_BASE64("2ro97uTO1+U7/uJWvKunug=="),"key") USING utf8)
+
+HEX(AES_ENCRYPT("123abc张三","key"))
+CONVERT (AES_DECRYPT(UNHEX("90CAC577B7E1E2F31A5403A68DA168F0"),"key") USING utf8)
+
+
+3、在springboot中加解密个人觉得更方便
+https://blog.csdn.net/Zack_tzh/article/details/112175232

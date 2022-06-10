@@ -11,6 +11,7 @@ import lib.sdlib.jsb.mark.utils.ServletUtils;
 import lib.sdlib.jsb.mark.utils.ShiroUtils;
 import lib.sdlib.jsb.mark.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -71,6 +72,8 @@ public class SysLoginService
         // 查询用户信息
         User user = userMapper.selectUserByLoginName(username);
 
+
+
         /**
          if (user == null && maybeMobilePhoneNumber(username))
          {
@@ -101,7 +104,21 @@ public class SysLoginService
             throw new UserBlockedException();
         }
 
-        passwordService.validate(user, password);
+  //      passwordService.validate(user, password);
+        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+        //加密所需的salt(盐),自定义
+        textEncryptor.setPassword("retail_salt");
+        //要加密的数据（数据库的用户名或密码）
+       // String username = textEncryptor.encrypt("shuanshuan");
+//        log.info(user.getPassword());
+//        log.info(textEncryptor.decrypt(user.getPassword()));
+//
+//        log.info(textEncryptor.encrypt(password));
+//        log.info(password);
+        if(!textEncryptor.decrypt(user.getPassword()).equals(password))
+        {
+            throw new UserPasswordNotMatchException();
+        }
 
     //    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         recordLoginInfo(user.getUser_id());

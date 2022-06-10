@@ -9,6 +9,7 @@ import lib.sdlib.jsb.mark.entity.LikeTimes;
 import lib.sdlib.jsb.mark.entity.User;
 import lib.sdlib.jsb.mark.utils.SensitiveUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -104,5 +105,18 @@ class MarkApplicationTests {
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
         MyBatisGenerator generator = new MyBatisGenerator(config, callback, warnings);
         generator.generate(null);
+    }
+
+    @Test
+    void testPassword()
+    {
+        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+        //加密所需的salt(盐),自定义
+        textEncryptor.setPassword("retail_salt");
+        //要加密的数据（数据库的用户名或密码）
+        String username = textEncryptor.encrypt("123456");
+        String password = textEncryptor.encrypt("123456");
+        System.out.println("username:"+username);
+        System.out.println("password:"+password);
     }
 }
