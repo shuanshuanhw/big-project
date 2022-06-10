@@ -315,7 +315,13 @@ public class ShiroConfig
         shiroFilterFactoryBean.setFilters(filters);
 
         // 所有请求需要认证
+        /*
+        rememberMe并且在有效期内登录过，则会允许访问其路径，但不会允许访问authc的路径。user是介于，anon和authc直之间的。
+        而“/authenticated= user”表示访问该地址的用户是身份验证通过或RememberMe 登录的都可以。或者说，某个页面需要登录才能看，
+        但这个页面信息又不太重要，就可已使用这个
+         */
         filterChainDefinitionMap.put("/**", "user,kickout,onlineSession,syncOnlineSession");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;

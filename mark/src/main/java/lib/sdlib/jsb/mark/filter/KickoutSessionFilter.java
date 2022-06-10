@@ -3,7 +3,9 @@ package lib.sdlib.jsb.mark.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lib.sdlib.jsb.mark.common.AjaxResult;
 import lib.sdlib.jsb.mark.common.ShiroConstants;
+import lib.sdlib.jsb.mark.entity.User;
 import lib.sdlib.jsb.mark.utils.ServletUtils;
+import lib.sdlib.jsb.mark.utils.ShiroUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.Session;
@@ -34,7 +36,7 @@ public class KickoutSessionFilter extends AccessControlFilter
     /**
      * 同一个用户最大会话数
      **/
-    private int maxSession = -1;
+    private int maxSession = 1;
 
     /**
      * 踢出之前登录的/之后登录的用户 默认false踢出之前登录的用户
@@ -69,9 +71,9 @@ public class KickoutSessionFilter extends AccessControlFilter
         {
             Session session = subject.getSession();
             // 当前登录用户
-//            SysUser user = ShiroUtils.getSysUser();
-//            String loginName = user.getLoginName();
-            String loginName ="";// 后加
+            User user = ShiroUtils.getSysUser();
+            String loginName = user.getLogin_name();
+
             Serializable sessionId = session.getId();
 
             // 读取缓存用户 没有就存入
