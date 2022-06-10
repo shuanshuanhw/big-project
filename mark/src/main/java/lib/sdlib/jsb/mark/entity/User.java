@@ -30,6 +30,7 @@ public class User implements Serializable {
     }
 
     private boolean rememberme;
+    private String validateCode;
     private Long user_id;
 
     private Long dept_id;

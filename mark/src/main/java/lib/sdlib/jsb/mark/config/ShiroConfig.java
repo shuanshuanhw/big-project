@@ -293,17 +293,19 @@ public class ShiroConfig
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
-        filterChainDefinitionMap.put("/agv/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/agv/login", "anon");
+//        filterChainDefinitionMap.put("/agv/login", "anon,captchaValidate");
         filterChainDefinitionMap.put("/login","anon");
         // 注册相关
-        filterChainDefinitionMap.put("/register", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/register", "anon");
+//        filterChainDefinitionMap.put("/register", "anon,captchaValidate");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
         filters.put("onlineSession", onlineSessionFilter());
         filters.put("syncOnlineSession", syncOnlineSessionFilter());
-        filters.put("captchaValidate", captchaValidateFilter());
+//        filters.put("captchaValidate", captchaValidateFilter());
         filters.put("kickout", kickoutSessionFilter());
         // 注销成功，则跳转到指定页面
         filters.put("logout", logoutFilter());

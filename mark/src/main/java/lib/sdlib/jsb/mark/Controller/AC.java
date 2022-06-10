@@ -2,6 +2,7 @@ package lib.sdlib.jsb.mark.Controller;
 
 import cn.hutool.core.convert.Convert;
 import com.github.pagehelper.PageHelper;
+import com.google.code.kaptcha.Constants;
 import com.sun.org.apache.regexp.internal.RE;
 import lib.sdlib.jsb.mark.common.Result;
 import lib.sdlib.jsb.mark.common.ShiroConstants;
@@ -96,8 +97,21 @@ public class AC {
 
     @ResponseBody
     @PostMapping("/agv/login")
-    public Result login(@RequestBody @Valid User user, BindingResult errors)
+    public Result login(@RequestBody @Valid User user, BindingResult errors,HttpServletRequest req)
     {
+        // 判断验证码
+
+        Object obj = req.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        String code = String.valueOf(obj != null ? obj : "");
+
+        req.getSession().removeAttribute(ShiroConstants.CURRENT_VALIDATECODE);
+
+        if (lib.sdlib.jsb.mark.utils.StringUtils.isEmpty(user.getValidateCode()) || !user.getValidateCode().equalsIgnoreCase(code))
+        {
+            // equalsIgnoreCase 忽略大小写的比较
+            return Result.error("验证码为空或验证码错误");
+        }
+
         if (errors.hasErrors()) {
             return Result.error(errors.getFieldError().getDefaultMessage());
         }

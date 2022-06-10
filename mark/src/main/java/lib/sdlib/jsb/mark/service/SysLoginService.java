@@ -37,17 +37,15 @@ public class SysLoginService
      */
     public User login(String username, String password)
     {
-        log.info("CURRENT_CAPTCHA:"+ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA));
-
         // 验证码校验
         // 一个鸡贼的设置
         // 一旦页面上的验证码输入框的值为空，或者 session 里的验证码和页面上传过来的不一致，在过滤器里设置req里的验证码值为ShiroConstants.CAPTCHA_ERROR
         // 再到这里来做处理
-        if (ShiroConstants.CAPTCHA_ERROR.equals(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA)))
-        {
-        //    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
-            throw new CaptchaException();
-        }
+//        if (ShiroConstants.CAPTCHA_ERROR.equals(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA)))
+//        {
+//        //    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
+//            throw new CaptchaException();
+//        }
         // 用户名或密码为空 错误
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
         {
@@ -55,20 +53,20 @@ public class SysLoginService
             throw new UserNotExistsException();
         }
         // 密码如果不在指定范围内 错误
-        if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
-                || password.length() > UserConstants.PASSWORD_MAX_LENGTH)
-        {
-       //     AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
-            throw new UserPasswordNotMatchException();
-        }
+//        if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
+//                || password.length() > UserConstants.PASSWORD_MAX_LENGTH)
+//        {
+//       //     AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
+//            throw new UserPasswordNotMatchException();
+//        }
 
         // 用户名不在指定范围内 错误
-        if (username.length() < UserConstants.USERNAME_MIN_LENGTH
-                || username.length() > UserConstants.USERNAME_MAX_LENGTH)
-        {
-      //      AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
-            throw new UserPasswordNotMatchException();
-        }
+//        if (username.length() < UserConstants.USERNAME_MIN_LENGTH
+//                || username.length() > UserConstants.USERNAME_MAX_LENGTH)
+//        {
+//      //      AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
+//            throw new UserPasswordNotMatchException();
+//        }
 
         // 查询用户信息
         User user = userMapper.selectUserByLoginName(username);

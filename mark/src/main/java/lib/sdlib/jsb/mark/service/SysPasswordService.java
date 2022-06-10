@@ -42,6 +42,7 @@ public class SysPasswordService
 
         AtomicInteger retryCount = loginRecordCache.get(loginName);
 
+        // 不知这个缓存有什么用
         if (retryCount == null)
         {
             retryCount = new AtomicInteger(0);
