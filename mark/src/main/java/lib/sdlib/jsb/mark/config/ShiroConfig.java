@@ -16,6 +16,7 @@ import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -250,8 +251,10 @@ public class ShiroConfig
      */
     public LogoutFilter logoutFilter()
     {
+        // 若依定义了自己的退出过滤器，继承了系统的退出过滤器，但是使用系统给的退出过滤器更方便
         LogoutFilter logoutFilter = new LogoutFilter();
-        logoutFilter.setLoginUrl(loginUrl);
+        logoutFilter.setRedirectUrl(loginUrl);
+//        logoutFilter.setLoginUrl(loginUrl);
         return logoutFilter;
     }
 
@@ -370,6 +373,8 @@ public class ShiroConfig
     {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
+
+        // 如果配置表没有配置密钥，就产生随机的密钥
         if (StringUtils.isNotEmpty(cipherKey))
         {
             cookieRememberMeManager.setCipherKey(Base64.decode(cipherKey));

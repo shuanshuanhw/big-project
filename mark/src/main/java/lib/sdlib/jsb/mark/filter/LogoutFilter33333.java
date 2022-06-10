@@ -1,6 +1,9 @@
 package lib.sdlib.jsb.mark.filter;
 
+import lib.sdlib.jsb.mark.entity.User;
 import lib.sdlib.jsb.mark.service.ISysUserOnlineService;
+import lib.sdlib.jsb.mark.utils.ShiroUtils;
+import lib.sdlib.jsb.mark.utils.SpringUtils;
 import lib.sdlib.jsb.mark.utils.StringUtils;
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
@@ -15,9 +18,9 @@ import javax.servlet.ServletResponse;
  *
  * @author ruoyi
  */
-public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
+public class LogoutFilter33333 extends org.apache.shiro.web.filter.authc.LogoutFilter
 {
-    private static final Logger log = LoggerFactory.getLogger(LogoutFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(LogoutFilter33333.class);
 
     /**
      * 退出后重定向的地址
@@ -43,15 +46,15 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
             String redirectUrl = getRedirectUrl(request, response, subject);
             try
             {
-          //      SysUser user = ShiroUtils.getSysUser();
-        //        if (StringUtils.isNotNull(user))
-        //        {
-         //           String loginName = user.getLoginName();
+                User user = ShiroUtils.getSysUser();
+                if (StringUtils.isNotNull(user))
+                {
+                    String loginName = user.getLogin_name();
                     // 记录用户退出日志
-         //           AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success")));
+           //         AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success")));
                     // 清理缓存
-      //              SpringUtils.getBean(ISysUserOnlineService.class).removeUserCache(loginName, ShiroUtils.getSessionId());
-   //             }
+                    SpringUtils.getBean(ISysUserOnlineService.class).removeUserCache(loginName, ShiroUtils.getSessionId());
+                }
                 // 退出登录
                 subject.logout();
             }
