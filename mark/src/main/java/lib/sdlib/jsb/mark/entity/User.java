@@ -1,7 +1,9 @@
 package lib.sdlib.jsb.mark.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
@@ -13,34 +15,9 @@ import java.util.Date;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable {
-    public User()
-    {
-    }
-
-    public User(Long user_id, Long dept_id, @NotNull @Size(min = 3, max = 10) String login_name, String user_name, String user_type, String email, String phonenumber, String sex, String avatar, @NotNull @Size(min = 3, max = 10) String password, String salt, String status, String del_flag, String login_ip, Date login_date, Date pwd_update_date, String create_by, Date create_time, String update_by, Date update_time, String remark) {
-        this.user_id = user_id;
-        this.dept_id = dept_id;
-        this.login_name = login_name;
-        this.user_name = user_name;
-        this.user_type = user_type;
-        this.email = email;
-        this.phonenumber = phonenumber;
-        this.sex = sex;
-        this.avatar = avatar;
-        this.password = password;
-        this.salt = salt;
-        this.status = status;
-        this.del_flag = del_flag;
-        this.login_ip = login_ip;
-        this.login_date = login_date;
-        this.pwd_update_date = pwd_update_date;
-        this.create_by = create_by;
-        this.create_time = create_time;
-        this.update_by = update_by;
-        this.update_time = update_time;
-        this.remark = remark;
-    }
 
     public boolean isAdmin()
     {
@@ -52,6 +29,7 @@ public class User implements Serializable {
         return userId != null && 1L == userId;
     }
 
+    private boolean rememberme;
     private Long user_id;
 
     private Long dept_id;

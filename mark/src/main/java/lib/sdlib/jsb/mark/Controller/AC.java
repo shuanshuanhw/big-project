@@ -13,6 +13,10 @@ import lib.sdlib.jsb.mark.entity.User;
 import lib.sdlib.jsb.mark.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -97,9 +101,22 @@ public class AC {
         if (errors.hasErrors()) {
             return Result.error(errors.getFieldError().getDefaultMessage());
         }
-        log.info("进来了");
-        log.info(user.toString());
-        return Result.ok();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getLogin_name(), user.getPassword(), user.isRememberme());
+        Subject subject = SecurityUtils.getSubject();
+        try
+        {
+            subject.login(token);
+            return Result.ok();
+        }
+        catch (AuthenticationException e)
+        {
+            String msg = "用户或密码错误";
+            if (StringUtils.isNotEmpty(e.getMessage()))
+            {
+                msg = e.getMessage();
+            }
+            return Result.error(msg);
+        }
     }
     @ResponseBody
     @PostMapping("/agv/submitFruition")

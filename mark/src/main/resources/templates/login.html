@@ -162,8 +162,9 @@
 
                         await loginApi(this.loginForm).then(req =>
                         {
+                            console.log('req.data',req.data)
                             if (req.data.flag) {
-                                console.log(req.data)
+
                                 this.$message.success(req.data.message)
                                 // 登陆成功后，把个人信息放在浏览器存储区域
                                 localStorage.setItem('userInfo',JSON.stringify(req.data))

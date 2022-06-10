@@ -10,6 +10,7 @@ import lib.sdlib.jsb.mark.utils.DateUtils;
 import lib.sdlib.jsb.mark.utils.ServletUtils;
 import lib.sdlib.jsb.mark.utils.ShiroUtils;
 import lib.sdlib.jsb.mark.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
  * @author ruoyi
  */
 @Component
+@Slf4j
 public class SysLoginService
 {
     @Autowired
@@ -35,7 +37,12 @@ public class SysLoginService
      */
     public User login(String username, String password)
     {
+        log.info("CURRENT_CAPTCHA:"+ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA));
+
         // 验证码校验
+        // 一个鸡贼的设置
+        // 一旦页面上的验证码输入框的值为空，或者 session 里的验证码和页面上传过来的不一致，在过滤器里设置req里的验证码值为ShiroConstants.CAPTCHA_ERROR
+        // 再到这里来做处理
         if (ShiroConstants.CAPTCHA_ERROR.equals(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA)))
         {
         //    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));

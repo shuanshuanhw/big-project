@@ -69,6 +69,8 @@ public class CaptchaValidateFilter extends AccessControlFilter
         request.getSession().removeAttribute(ShiroConstants.CURRENT_VALIDATECODE);
         if (StringUtils.isEmpty(validateCode) || !validateCode.equalsIgnoreCase(code))
         {
+            // equalsIgnoreCase 忽略大小写的比较
+            // 一旦页面上的验证码输入框的值为空，或者 session 里的验证码和页面上传过来的不一致，就跳到拒绝方法执行处理
             return false;
         }
         return true;
@@ -80,5 +82,7 @@ public class CaptchaValidateFilter extends AccessControlFilter
         // 这里为true才会接下来执行其它的过滤器和servlet，如果为false，就会终止执行
         request.setAttribute(ShiroConstants.CURRENT_CAPTCHA, ShiroConstants.CAPTCHA_ERROR);
         return true;
+
+
     }
 }

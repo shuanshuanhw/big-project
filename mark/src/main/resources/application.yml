@@ -27,6 +27,11 @@ spring:
       filters: stat
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       use-global-data-source-stat: true
+
+  messages:
+    # 国际化资源文件路径
+    basename: messages
+
 pagehelper:
   helperDialect: mysql
   reasonable: true
