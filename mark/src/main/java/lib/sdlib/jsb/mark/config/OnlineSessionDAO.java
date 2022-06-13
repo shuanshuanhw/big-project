@@ -8,6 +8,7 @@ package lib.sdlib.jsb.mark.config;
  */
 
 import lib.sdlib.jsb.mark.common.OnlineStatus;
+import lib.sdlib.jsb.mark.service.SysShiroService;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
@@ -35,8 +36,8 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO
      */
     private static final String LAST_SYNC_DB_TIMESTAMP = OnlineSessionDAO.class.getName() + "LAST_SYNC_DB_TIMESTAMP";
 
-//    @Autowired
-//    private SysShiroService sysShiroService;
+    @Autowired
+    private SysShiroService sysShiroService;
 
     public OnlineSessionDAO()
     {
@@ -57,8 +58,8 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO
     @Override
     protected Session doReadSession(Serializable sessionId)
     {
-//        return sysShiroService.getSession(sessionId);
-        return null;
+        return sysShiroService.getSession(sessionId);
+        //       return null;
     }
 
     @Override
@@ -118,6 +119,6 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO
             return;
         }
         onlineSession.setStatus(OnlineStatus.off_line);
-    //    sysShiroService.deleteSession(onlineSession);
+        sysShiroService.deleteSession(onlineSession);
     }
 }

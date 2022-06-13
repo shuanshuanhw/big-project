@@ -1,8 +1,11 @@
 package lib.sdlib.jsb.mark.service.impl;
 
 import lib.sdlib.jsb.mark.common.ShiroConstants;
+import lib.sdlib.jsb.mark.dao.UserOnlineMapper;
 import lib.sdlib.jsb.mark.entity.SysUserOnline;
+import lib.sdlib.jsb.mark.entity.UserOnline;
 import lib.sdlib.jsb.mark.service.ISysUserOnlineService;
+import lib.sdlib.jsb.mark.utils.DateUtils;
 import lib.sdlib.jsb.mark.utils.StringUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -22,8 +25,8 @@ import java.util.List;
 @Service
 public class SysUserOnlineServiceImpl implements ISysUserOnlineService
 {
-//    @Autowired
-//    private SysUserOnlineMapper userOnlineDao;
+    @Autowired
+    private UserOnlineMapper userOnlineDao;
 
     @Autowired
     private EhCacheManager ehCacheManager;
@@ -35,10 +38,10 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
      * @return 在线用户信息
      */
     @Override
-    public SysUserOnline selectOnlineById(String sessionId)
+    public UserOnline selectOnlineById(String sessionId)
     {
 
-        return null;//userOnlineDao.selectOnlineById(sessionId);
+        return userOnlineDao.selectOnlineById(sessionId);
     }
 
     /**
@@ -50,10 +53,10 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     @Override
     public void deleteOnlineById(String sessionId)
     {
-        SysUserOnline userOnline = selectOnlineById(sessionId);
+        UserOnline userOnline = selectOnlineById(sessionId);
         if (StringUtils.isNotNull(userOnline))
         {
-          //  userOnlineDao.deleteOnlineById(sessionId);
+            userOnlineDao.deleteOnlineById(sessionId);
         }
     }
 
@@ -68,10 +71,10 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     {
         for (String sessionId : sessions)
         {
-            SysUserOnline userOnline = selectOnlineById(sessionId);
+            UserOnline userOnline = selectOnlineById(sessionId);
             if (StringUtils.isNotNull(userOnline))
             {
-              //  userOnlineDao.deleteOnlineById(sessionId);
+                userOnlineDao.deleteOnlineById(sessionId);
             }
         }
     }
@@ -82,10 +85,10 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
      * @param online 会话信息
      */
     @Override
-    public void saveOnline(SysUserOnline online)
+    public void saveOnline(UserOnline online)
     {
 
-        //userOnlineDao.saveOnline(online);
+        userOnlineDao.saveOnline(online);
     }
 
     /**
@@ -94,9 +97,9 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
      * @param userOnline 在线用户
      */
     @Override
-    public List<SysUserOnline> selectUserOnlineList(SysUserOnline userOnline)
+    public List<UserOnline> selectUserOnlineList(UserOnline userOnline)
     {
-        return null;//userOnlineDao.selectUserOnlineList(userOnline);
+        return userOnlineDao.selectUserOnlineList(userOnline);
     }
 
     /**
@@ -107,7 +110,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     @Override
     public void forceLogout(String sessionId)
     {
-      //  userOnlineDao.deleteOnlineById(sessionId);
+        userOnlineDao.deleteOnlineById(sessionId);
     }
 
     /**
@@ -134,9 +137,9 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
      * @param expiredDate 失效日期
      */
     @Override
-    public List<SysUserOnline> selectOnlineByExpired(Date expiredDate)
+    public List<UserOnline> selectOnlineByExpired(Date expiredDate)
     {
-  //      String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
-        return null;//userOnlineDao.selectOnlineByExpired(lastAccessTime);
+        String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
+        return userOnlineDao.selectOnlineByExpired(lastAccessTime);
     }
 }

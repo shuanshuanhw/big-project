@@ -1,0 +1,20 @@
+1、<include refid="selectOnlineVo"/>
+
+1- 将公共代码集成在一起，通过refid的方式调用
+ 	<select id="selectUserOnlineList" parameterType="SysUserOnline" resultMap="SysUserOnlineResult">
+		<include refid="selectOnlineVo"/>
+		<where>
+			<if test="ipaddr != null and ipaddr != ''">
+				AND ipaddr like concat('%', #{ipaddr}, '%')
+			</if>
+			<if test="loginName != null and loginName != ''">
+				AND login_name like concat('%', #{loginName}, '%')
+			</if>
+		</where>
+	</select>
+
+2- 公共代码集成部分
+	<sql id="selectOnlineVo">
+       select sessionId, login_name, dept_name, ipaddr, login_location, browser, os, status, start_timestamp, last_access_time, expire_time
+	   from sys_user_online
+    </sql>

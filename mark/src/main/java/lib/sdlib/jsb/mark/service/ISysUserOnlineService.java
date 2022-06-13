@@ -1,6 +1,7 @@
 package lib.sdlib.jsb.mark.service;
 
 import lib.sdlib.jsb.mark.entity.SysUserOnline;
+import lib.sdlib.jsb.mark.entity.UserOnline;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ public interface ISysUserOnlineService
      * @param sessionId 会话ID
      * @return 在线用户信息
      */
-    public SysUserOnline selectOnlineById(String sessionId);
+    public UserOnline selectOnlineById(String sessionId);
 
     /**
      * 通过会话序号删除信息
@@ -41,7 +42,7 @@ public interface ISysUserOnlineService
      *
      * @param online 会话信息
      */
-    public void saveOnline(SysUserOnline online);
+    public void saveOnline(UserOnline online);
 
     /**
      * 查询会话集合
@@ -49,7 +50,7 @@ public interface ISysUserOnlineService
      * @param userOnline 分页参数
      * @return 会话集合
      */
-    public List<SysUserOnline> selectUserOnlineList(SysUserOnline userOnline);
+    public List<UserOnline> selectUserOnlineList(UserOnline userOnline);
 
     /**
      * 强退用户
@@ -72,5 +73,5 @@ public interface ISysUserOnlineService
      * @param expiredDate 有效期
      * @return 会话集合
      */
-    public List<SysUserOnline> selectOnlineByExpired(Date expiredDate);
+    public List<UserOnline> selectOnlineByExpired(Date expiredDate);
 }
