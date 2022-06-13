@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -70,6 +71,11 @@ public class UserRealm extends AuthorizingRealm
         // 功能列表
     //    Set<String> menus = new HashSet<String>();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+
+        // 根据userid取出角色
+        List<String> list = userRoleMapper.selectRoleByUserId(user.getUser_id());
+        info.addRoles(list);
+
         // 管理员拥有所有权限
         if (user.isAdmin())
         {
@@ -78,16 +84,12 @@ public class UserRealm extends AuthorizingRealm
         }
         else
         {
-            List<String> userRoles = userRoleMapper.selectRoleByUserId(user.getUser_id());
-            for(String userRole: userRoles)
-            {
-                roles.add(userRole);
-            }
+//
   //          roles = roleService.selectRoleKeys(user.getUser_id());
 
 //            menus = menuService.selectPermsByUserId(user.getUserId());
             // 角色加入AuthorizationInfo认证对象
-            info.setRoles(roles);
+       //     info.setRoles(roles);
 //            // 权限加入AuthorizationInfo认证对象
 //            info.setStringPermissions(menus);
         }

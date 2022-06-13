@@ -8,6 +8,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.session.ExpiredSessionException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
@@ -27,6 +28,12 @@ import java.util.List;
 public class OnlineWebSessionManager extends DefaultWebSessionManager
 {
     private static final Logger log = LoggerFactory.getLogger(OnlineWebSessionManager.class);
+
+    // retrieve 取回
+    @Override
+    protected Session retrieveSession(SessionKey sessionKey) throws UnknownSessionException {
+        return super.retrieveSession(sessionKey);
+    }
 
     @Override
     public void setAttribute(SessionKey sessionKey, Object attributeKey, Object value) throws InvalidSessionException

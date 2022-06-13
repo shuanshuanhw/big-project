@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -132,6 +133,8 @@ public class AC {
             return Result.error(msg);
         }
     }
+
+    @RequiresRoles("common")
     @ResponseBody
     @PostMapping("/agv/submitFruition")
     public Result submitFruition(@RequestBody List<DataSdlibStati> dataArray)
@@ -146,10 +149,14 @@ public class AC {
         }
         return Result.ok();
     }
+
+    @RequiresRoles("common")
     @GetMapping("/agv/getAll")
     @ResponseBody
     public Result getAll()
     {
+        log.info(String.valueOf(SecurityUtils.getSubject().hasRole("admin")));
+        log.info(String.valueOf(SecurityUtils.getSubject().hasRole("common")));
      //   PageHelper.startPage(1,2);
         List<DataSdlibStati> dataSdlibStatis = dataSdlibStatiMapper.selectAll();
         for(DataSdlibStati data:dataSdlibStatis)
@@ -166,6 +173,7 @@ public class AC {
     }
 
 
+    @RequiresRoles("admin")
     @GetMapping("/getTop10")
     @ResponseBody
     public Result getTop10()
@@ -248,6 +256,7 @@ public class AC {
         return Result.ok(dataSdlibStati);
     }
 
+    @RequiresRoles("common")
     @GetMapping("/xq")
     public String xq(@PathParam("id")Integer id, HttpServletRequest req)
     {
@@ -258,6 +267,7 @@ public class AC {
         return "xq";
     }
 
+    @RequiresRoles("common")
     @GetMapping("/jg")
     public String jg(@PathParam("ids")String ids, HttpServletRequest req)
     {

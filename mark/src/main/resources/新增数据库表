@@ -44,7 +44,7 @@ create table user (
 ) engine=innodb auto_increment=100 comment = '用户信息表';
 
 insert into user values(1,  103, 'admin', '顺德图书馆管理员', '00', '178650140@qq.com', '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '管理员');
-insert into user values(2,  105, 'shuanshuan',    '黄维', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '测试员');
+insert into user values(2,  105, 'assessor',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
 
 -- ----------------------------
 -- 3、部门表
@@ -108,6 +108,12 @@ create table role (
   primary key (role_id)
 ) engine=innodb auto_increment=100 comment = '角色信息表';
 
+#                               角色名称 角色权限字符串  顺序 范围 状态 删除标志 创建者 创建时间    更新者 更新时间 备注
+insert into role values('1', '超级管理员', 'admin',  1, 1, '0', '0', 'admin', sysdate(), '', null, '超级管理员');
+insert into role values('2', '普通角色',   'common', 2, 2, '0', '0', 'admin', sysdate(), '', null, '普通角色');
+
+
+
 -- ----------------------------
 -- 6、用户和角色关联表  用户N-1角色
 -- ----------------------------
@@ -117,6 +123,12 @@ create table user_role (
   role_id   bigint(20) not null comment '角色ID',
   primary key(user_id, role_id)
 ) engine=innodb comment = '用户和角色关联表';
+
+
+#                               用户ID 角色ID
+insert into user_role values ('1', '1');
+insert into user_role values ('2', '2');
+
 
 -- ----------------------------
 -- 7、角色和菜单关联表  角色1-N菜单
