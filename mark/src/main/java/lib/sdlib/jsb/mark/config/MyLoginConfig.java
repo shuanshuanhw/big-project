@@ -19,8 +19,9 @@ public class MyLoginConfig implements WebMvcConfigurer {
         registry.addViewController("/index").setViewName("index");
 //        registry.addViewController("/xq").setViewName("xq");
         registry.addViewController("/test").setViewName("test");
-        registry.addViewController("/mark").setViewName("mark");
+        registry.addViewController("/agv/mark").setViewName("mar");
         registry.addViewController("/tabletest").setViewName("tabletest");
+        registry.addViewController("/unauth").setViewName("unauth");
    //     registry.addViewController("/login").setViewName("login");
     }
 }

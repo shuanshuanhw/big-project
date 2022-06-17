@@ -134,7 +134,7 @@ public class AC {
         }
     }
 
-    @RequiresRoles("common")
+//    @RequiresRoles("common")
     @ResponseBody
     @PostMapping("/agv/submitFruition")
     public Result submitFruition(@RequestBody List<DataSdlibStati> dataArray)
@@ -150,7 +150,7 @@ public class AC {
         return Result.ok();
     }
 
-    @RequiresRoles("common")
+//    @RequiresRoles("common")
     @GetMapping("/agv/getAll")
     @ResponseBody
     public Result getAll()
@@ -161,8 +161,8 @@ public class AC {
         List<DataSdlibStati> dataSdlibStatis = dataSdlibStatiMapper.selectAll();
         for(DataSdlibStati data:dataSdlibStatis)
         {
-            if(data.getName_implication().length()>100)
-                data.setName_implication(data.getName_implication().substring(0,100)+"...");
+            if(data.getName_implication().length()>30)
+                data.setName_implication(data.getName_implication().substring(0,30)+"...");
 
             data.setIfId("if"+data.getId());
 
@@ -240,8 +240,8 @@ public class AC {
         if(!returnData.isEmpty())
         {
             for(DataSdlibStati data:returnData) {
-                if (data.getName_implication().length() > 100)
-                    data.setName_implication(data.getName_implication().substring(0, 100) + "...");
+                if (data.getName_implication().length() > 30)
+                    data.setName_implication(data.getName_implication().substring(0, 30) + "...");
             }
         }
 
@@ -256,7 +256,7 @@ public class AC {
         return Result.ok(dataSdlibStati);
     }
 
-    @RequiresRoles("common")
+//    @RequiresRoles("common")
     @GetMapping("/xq")
     public String xq(@PathParam("id")Integer id, HttpServletRequest req)
     {
@@ -267,7 +267,7 @@ public class AC {
         return "xq";
     }
 
-    @RequiresRoles("common")
+//    @RequiresRoles("common")
     @GetMapping("/jg")
     public String jg(@PathParam("ids")String ids, HttpServletRequest req)
     {

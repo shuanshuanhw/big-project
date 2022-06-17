@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="css/login.css" type="text/css">
 
     <style>
+        .layui-panel{
+            padding: 3px;
+        }
         .box{
             display: -webkit-flex; /* Safari */
             display: flex;
@@ -24,12 +27,32 @@
             align-items: baseline;
             align-content: center;
         }
+        .zp{
+            margin-bottom: 10px;
+        }
         .item{
             width: 400px;
-            height: 350px;
+            height: 170px;
             border: 1px solid #b2b2b2;
-            margin-top: 30px;
+        /*url('../image/login/book1.jpg'),linear-gradient(to right bottom, rgba(255,0,0,0), rgba(16,33,106,1)),*/
+            background-image: url('../image/login/smartbook4.jpg');
+            background-repeat: no-repeat;
+            background-position: right bottom;
+            /*background-size: 55% 73%;*/
+            background-color: #EAE5D2;
+            /*margin-top: 10px;*/
             /*flex-basis: 20px;*/
+        }
+        body{
+            background-color: #F5F5DC;
+        }
+        img {
+            image-rendering: -moz-crisp-edges; /* Firefox */
+            image-rendering: -o-crisp-edges; /* Opera */
+            image-rendering: -webkit-optimize-contrast; /*Webkit (non-standard naming) */
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+
         }
         .item-top{
             width: 400px;
@@ -42,7 +65,7 @@
         }
         .item-implication{
             text-indent:2em;
-            height: 120px;
+            height: 60px;
             font-size: 18px;
         }
         .in-box {
@@ -50,20 +73,24 @@
         }
 
         .checkbox{
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             vertical-align: bottom;
             box-sizing: border-box;
             cursor: pointer;
             /*border-color: #00F7DE;*/
         }
+        .im{
+            vertical-align: bottom;
+            text-align: right;
+        }
         .bu{
-            width: 70px;
-            height: 40px;
+            width: 50px;
+            height: 30px;
             vertical-align: bottom;
             border: 1px solid #b2b2b2;
             box-sizing: border-box;
-            line-height: 40px;
+            line-height: 30px;
             text-align: center;
             cursor: pointer;
             background-color: #C2BE9E;
@@ -75,14 +102,14 @@
             background-color: #666666;
         }
         .btext{
-            width: 70px;
-            height: 40px;
+            width: 50px;
+            height: 30px;
             vertical-align: bottom;
             border-bottom: 1px solid #b2b2b2;
             border-top: 1px solid #b2b2b2;
             border-left: 1px solid #b2b2b2;
             box-sizing: border-box;
-            line-height: 40px;
+            line-height: 30px;
             text-align: center;
             margin-left: 30px;
         }
@@ -91,16 +118,38 @@
             font-size: 18px;
         }
         .function{
-            margin-left: 20px;
+            margin-left: 17px;
         }
         .top{
             position: sticky;
             top: 0px;
-            margin-left: 60px;
+            margin-bottom: 20px;
+            /*margin-left: 60px;*/
         }
         .nc{
             color: red;
             font-size: 25px;
+        }
+        .top1{
+            width: 100%;
+            height: 540px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            align-content: center;
+            /*flex-direction: column;*/
+            /*border: 1px solid red;*/
+        }
+        .circle{
+            width:300px;
+            height:300px;
+            border-radius:50%;
+            overflow:hidden;
+        }
+        .circle > img{
+            width: 100%;
+            height: 100%;
         }
     </style>
     <!-- 引入 Vue 3, 使用全局变量 Vue -->
@@ -114,37 +163,51 @@
 
 <body>
 <div id="app3">
+<div class="top1">
+    <div class="top1item">
+    </div>
+    <div class="top1item">
+    </div>
+<div class="top1item circle">
+    <img src="image/login/bigcircle.jpg" alt="正方形的原始图片" />
+</div>
+<div class="top1item">
+<div><H1>顺德图书馆 综合考评系统</H1></div>
 
-    <div class="layui-bg-gray" ref="testDom" style="padding: 30px;position: sticky;top: 0;background-color: white;z-index: 999;">
+    <div><H2>欢迎光临 尊敬的评委</H2></div>
+
+    <div style="margin-top: 50px;font-size: 20px;"><span style="margin-right: 30px;">点击箭头 开始考评</span> <div style="display: inline-block"><a href="#two"><img src="image/login/dong.gif" width="50" /></a></div></div>
+</div>
+    <div class="top1item">
+    </div>
+    <div class="top1item">
+    </div>
+</div>
+    <div class="layui-bg-gray top" ref="testDom" id="two">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-panel">
-                    <div style="padding: 10px;"><H1>顺德图书馆 综合考评系统</H1> <H2><a href="/logout">退出</a></H2></div>
-                    <div style="padding: 10px;"><H3>某某某,你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">详情</span></a> </H3></div>
-                    <div style="padding: 10px;" v-if="ifVote2"><H2>您当前选择的作品如下(<span class="nc" @Click="ifVote2 = false">隐藏</span>):</H2></div>
-                    <div style="padding: 10px;" class="box" v-if="ifVote2">
-                        <div class="layui-card item-top" v-for="item in dataArraySelect" :key="item.id" style="">
-                            {{item.agv_name}}
-                        </div>
-                    </div>
+                    <div><H3>你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">详情</span></a> </H3></div>
                     <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>
                 </div>
             </div>
 
         </div>
     </div>
+
+
 <div class="box">
 
 <!--<div v-for="item in dataArray" :key="item.id" class="item"></div><div class="item" ></div>-->
 
     <div class="layui-card item" v-for="item in dataArray" :key="item.id">
-        <div class="layui-card-header" style="color: #C2BE9E;">{{item.agv_name}}</div>
+        <div class="layui-card-header" style="color: #d94f28;">{{item.agv_name}}</div>
         <div class="layui-card-body item-implication">
             {{item.name_implication}}
         </div>
         <hr>
         <div class="function"><div class="in-box bu"  @click = "xq(item.id)" >详情</div><div class="in-box btext">{{item.ifSelectString}}</div><div class="in-box"><input type="checkbox" :id="item.ifId" :data-ifS="item.ifId" @change="inputchecked"  lay-skin="switch" class="checkbox"  v-model="item.ifSelect" :title="item.ifSelect"></div>  </div>
-        <hr>
+<!--        <hr>-->
     </div>
 
 </div>
@@ -204,11 +267,11 @@
             // }
             // loading.open();
 
-            this.$loading.service({
-                                    lock: true,
-                                    text: '加载中……',
-                                    background: 'rgba(0, 0, 0, 0.7)'
-                                });
+            // this.$loading.service({
+            //                         lock: true,
+            //                         text: '加载中……',
+            //                         background: 'rgba(0, 0, 0, 0.7)'
+            //                     });
         },
         beforeDestroy() {
         },
@@ -262,6 +325,9 @@
                                 console.log('进入',this.dataArray[i].ifSelect)
                                 this.dataArray[i].ifSelect = false;
                                 this.dataArray[i].ifSelectString = '未勾选'
+
+                                this.dataArraySelect.pop(this.dataArray[i]);
+
                                 this.selectNumber--;
                             }
                         }

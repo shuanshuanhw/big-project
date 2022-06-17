@@ -26,7 +26,6 @@ public class GlobalExceptionHandler
 {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-
     @ExceptionHandler(AuthenticationException.class)
     public Result handleAuthenticationException(AuthenticationException e,HttpServletRequest request)
     {

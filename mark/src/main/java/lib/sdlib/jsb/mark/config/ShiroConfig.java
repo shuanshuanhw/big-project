@@ -275,6 +275,8 @@ public class ShiroConfig
         // Shiro连接约束配置，即过滤链的定义
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 对静态资源设置匿名访问
+        filterChainDefinitionMap.put("plugins/**","anon");
+        filterChainDefinitionMap.put("/moment/**","anon");
         filterChainDefinitionMap.put("/image/**","anon");
         filterChainDefinitionMap.put("/api/**","anon");
         filterChainDefinitionMap.put("/layui/**","anon");
@@ -291,13 +293,17 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/ruoyi/**", "anon");
 
         filterChainDefinitionMap.put("/loginTest", "anon");
-
+        filterChainDefinitionMap.put("/index", "anon");
 
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/agv/login", "anon");
+        filterChainDefinitionMap.put("/agv/**", "anon");
+        filterChainDefinitionMap.put("/xq","anon");
+        filterChainDefinitionMap.put("/jg","anon");
+        filterChainDefinitionMap.put("/agv/mark","anon");
 //        filterChainDefinitionMap.put("/agv/login", "anon,captchaValidate");
         filterChainDefinitionMap.put("/login","anon");
         // 注册相关
@@ -321,8 +327,9 @@ public class ShiroConfig
         而“/authenticated= user”表示访问该地址的用户是身份验证通过或RememberMe 登录的都可以。或者说，某个页面需要登录才能看，
         但这个页面信息又不太重要，就可已使用这个
          */
-        filterChainDefinitionMap.put("/**", "user,kickout,onlineSession,syncOnlineSession");
-        filterChainDefinitionMap.put("/agv/**", "user,kickout,onlineSession,syncOnlineSession");
+        filterChainDefinitionMap.put("/**", "user,onlineSession,syncOnlineSession");
+//        filterChainDefinitionMap.put("/**", "user,kickout,onlineSession,syncOnlineSession");
+//        filterChainDefinitionMap.put("/agv/**", "user,kickout,onlineSession,syncOnlineSession");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;
