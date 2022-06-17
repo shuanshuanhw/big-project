@@ -123,8 +123,16 @@
         .top{
             position: sticky;
             top: 0px;
-            margin-bottom: 20px;
+            font-size: 25px;
+            padding: 5px;
+            background-color: #F5F5DC;
+            line-height: 40px;
+            height: 50px;
             /*margin-left: 60px;*/
+            margin-bottom: 20px;
+            z-index: 999;
+            text-align: center;
+
         }
         .nc{
             color: red;
@@ -183,10 +191,10 @@
     <div class="top1item">
     </div>
 </div>
-    <div class="layui-bg-gray top" ref="testDom" id="two">
-        <div class="layui-row layui-col-space15">
-            <div class="layui-col-md12">
-                <div class="layui-panel">
+    <div class="top" ref="testDom" id="two">
+        <div>
+            <div>
+                <div>
                     <div><H3>你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">详情</span></a> </H3></div>
                     <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>
                 </div>
