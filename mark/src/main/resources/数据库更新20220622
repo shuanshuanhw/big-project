@@ -24,6 +24,7 @@ update data_sdlib_stati set agv_name='智能中书' where agv_name like '%智能
 update data_sdlib_stati set agv_name='智汇图云' where agv_name like '%智汇图云%';
 
 select id,agv_name from data_sdlib_stati where agv_name in ('智汇图云','捷书通','智慧书纽','智能中书','书快链','传书精灵','顺图精灵','蜂谷','顺图凤移','慧拾小能手','拣消搬图灵','顺图易摆分','还书革格','原归','顺图捷','顺图“帮德手”','智能图管+','书识达','智康图宝','肖班','顺图畅','励精图智','书芯如意','e书通','易上架','智慧方圆','书馆大师','智运精灵','书顺达','顺智图','全智动','一路顺凤','简小帮','顺图灵机','顺图智服','知书智理','书顺到','书海智舟','顺图智慧仪') or id=2 or id=49 order by id;
+delete from data_sdlib_stati where agv_name not in ('智汇图云','捷书通','智慧书纽','智能中书','书快链','传书精灵','顺图精灵','蜂谷','顺图凤移','慧拾小能手','拣消搬图灵','顺图易摆分','还书革格','原归','顺图捷','顺图“帮德手”','智能图管+','书识达','智康图宝','肖班','顺图畅','励精图智','书芯如意','e书通','易上架','智慧方圆','书馆大师','智运精灵','书顺达','顺智图','全智动','一路顺凤','简小帮','顺图灵机','顺图智服','知书智理','书顺到','书海智舟','顺图智慧仪') and id!=2 and id!=49;
 
 insert into data_sdlib_stati(agv_name,name_implication) values('原归','物归原主');
 insert into data_sdlib_stati(agv_name,name_implication) values('顺图捷','顺：顺德；图：图书馆；捷：快捷');
