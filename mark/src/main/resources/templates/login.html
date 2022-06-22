@@ -31,29 +31,29 @@
                               @keyup.enter.native="handleLogin" />
                 </el-form-item>
 
-                <el-form-item>
-                <div class="row m-t" th:if="${captchaEnabled==true}">
-                    <div class="col-xs-6">
-                        <el-input type="text" v-model="loginForm.validateCode" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5" />
-                    </div>
-                    <div class="col-xs-6">
-                        <a href="javascript:void(0);" title="点击更换验证码">
-                            <img th:src="@{/captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>
-                        </a>
-                    </div>
-                </div>
-                </el-form-item>
+<!--                <el-form-item>-->
+<!--                <div class="row m-t" th:if="${captchaEnabled==true}">-->
+<!--                    <div class="col-xs-6">-->
+<!--                        <el-input type="text" v-model="loginForm.validateCode" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5" />-->
+<!--                    </div>-->
+<!--                    <div class="col-xs-6">-->
+<!--                        <a href="javascript:void(0);" title="点击更换验证码">-->
+<!--                            <img th:src="@{/captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                </el-form-item>-->
 
-                <el-form-item>
-                <div class="checkbox-custom" th:if="${isRemembered}">
-                    <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>
-                    <el-switch
-                            v-model="loginForm.rememberme"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949">
-                    </el-switch><label for="rememberme">记住我</label>
-                </div>
-                </el-form-item>
+<!--                <el-form-item>-->
+<!--                <div class="checkbox-custom" th:if="${isRemembered}">-->
+<!--                    <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>-->
+<!--                    <el-switch-->
+<!--                            v-model="loginForm.rememberme"-->
+<!--                            active-color="#13ce66"-->
+<!--                            inactive-color="#ff4949">-->
+<!--                    </el-switch><label for="rememberme">记住我</label>-->
+<!--                </div>-->
+<!--                </el-form-item>-->
 
                 <el-form-item style="width:100%;">
                     <!--             :loading="loading"的作用就是当为真时，按键会有小小的东西在转，显得很有仪式感-->
@@ -175,7 +175,7 @@
                                 this.$message.success(req.data.message)
                                 // 登陆成功后，把个人信息放在浏览器存储区域
                                 localStorage.setItem('userInfo',JSON.stringify(req.data))
-                                window.location.href= '/index'
+                                window.location.href= '/adminmark'
                             } else {
                                 // 这个应该是ｖｕｅ内置的函数
                                 this.$message.error(req.data.message)

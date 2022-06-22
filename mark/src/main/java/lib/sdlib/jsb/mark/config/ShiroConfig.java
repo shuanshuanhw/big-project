@@ -300,10 +300,12 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/agv/login", "anon");
+        filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/agv/**", "anon");
         filterChainDefinitionMap.put("/xq","anon");
         filterChainDefinitionMap.put("/jg","anon");
-        filterChainDefinitionMap.put("/agv/mark","anon");
+        filterChainDefinitionMap.put("/mark","anon");
+
 //        filterChainDefinitionMap.put("/agv/login", "anon,captchaValidate");
         filterChainDefinitionMap.put("/login","anon");
         // 注册相关

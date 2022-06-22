@@ -12,7 +12,10 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="css/common.css" type="text/css">
     <link rel="stylesheet" href="css/login.css" type="text/css">
-
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <style>
         .layui-panel{
             padding: 3px;
@@ -35,10 +38,10 @@
             height: 170px;
             border: 1px solid #b2b2b2;
         /*url('../image/login/book1.jpg'),linear-gradient(to right bottom, rgba(255,0,0,0), rgba(16,33,106,1)),*/
-            background-image: url('../image/login/smartbook4.jpg');
+            background-image: url('../image/login/book3.png');
             background-repeat: no-repeat;
             background-position: right bottom;
-            /*background-size: 55% 73%;*/
+            background-size: 20% 22%;
             background-color: #EAE5D2;
             /*margin-top: 10px;*/
             /*flex-basis: 20px;*/
@@ -140,7 +143,7 @@
         }
         .top1{
             width: 100%;
-            height: 540px;
+            height: 525px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
@@ -154,10 +157,12 @@
             height:300px;
             border-radius:50%;
             overflow:hidden;
+            border: 10px solid #d94f28;
         }
         .circle > img{
             width: 100%;
             height: 100%;
+
         }
     </style>
     <!-- 引入 Vue 3, 使用全局变量 Vue -->
@@ -177,14 +182,14 @@
     <div class="top1item">
     </div>
 <div class="top1item circle">
-    <img src="image/login/bigcircle.jpg" alt="正方形的原始图片" />
+    <img src="image/login/book2.jpg" alt="正方形的原始图片" />
 </div>
 <div class="top1item">
-<div><H1>顺德图书馆 综合考评系统</H1></div>
+<!--<div><H1>顺德图书馆 综合考评系统</H1></div>-->
 
-    <div><H2>欢迎光临 尊敬的评委</H2></div>
+<!--    <div><H2>欢迎光临 尊敬的评委</H2></div>-->
 
-    <div style="margin-top: 50px;font-size: 20px;"><span style="margin-right: 30px;">点击箭头 开始考评</span> <div style="display: inline-block"><a href="#two"><img src="image/login/dong.gif" width="50" /></a></div></div>
+    <div style="margin-top: 20px;font-size: 20px;"><span style="margin-right: 30px;font-size: 50px;">点击箭头 开始考评</span> <div style="display: inline-block"><a href="#two" class="btn"><img src="image/login/dong.gif" width="120" /></a></div></div>
 </div>
     <div class="top1item">
     </div>
@@ -220,6 +225,7 @@
 
 </div>
 </div>
+<!--<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">-->
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
 <script src="plugins/vue/vue.js"></script>
 <!-- 引入axios -->
@@ -229,7 +235,6 @@
 <script src="js/request.js"></script>
 <script src="api/index.js"></script>
 <script>
-
 
 
 
@@ -319,10 +324,10 @@
                     // 如果总数超过10个,将刚刚勾选的退回
 
                     this.selectNumber = selectNumber;
-                    if (this.selectNumber > 10)
+                    if (this.selectNumber > 12)
                     {
                         //alert('不能超过10个选择');
-                        layui.layer.msg('不能超过10个选择');
+                        layui.layer.msg('不能超过12个选择');
                         // console.log('document.getElementById(target.target.dataset.ifs)',document.getElementById(target.target.dataset.ifs))
 
                         // 首先必须先置false,否则下面的this.dataArray[i].ifSelect = false;无效
@@ -362,7 +367,7 @@
 
 
                 // 判断一下是否能显示提交按钮
-                if(this.selectNumber == 10)
+                if(this.selectNumber == 12)
                 {
                     // 将提交按钮显示出来
                     this.ifVote = true;
@@ -381,7 +386,7 @@
                     if(res.data.flag)
                     {
                         layer.msg('提交成功,将跳转到考评第二流程...');
-                        window.location.href= '/agv/mark'
+                        window.location.href= '/mark'
                     }
                     else {
                         layer.msg('提交失败');

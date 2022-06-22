@@ -1,0 +1,32 @@
+ALTER TABLE data_sdlib_stati ADD score varchar(255) default '';
+ALTER TABLE data_sdlib_stati CHANGE score score22 varchar(255) default '';
+
+select * from data_sdlib_stati where agv_name like '%智康图宝%';
+select * from data_sdlib_stati where agv_name='图书精灵';
+
+delete from data_sdlib_stati where id=395 or id=351;
+
+select * from data_sdlib_stati where agv_name in ('易上架','智能中书','书快链');
+select agv_name from data_sdlib_stati where id in (1,12,14,65,95,104,105,110,204,219,229,275,326,337,338,340,341,342,370,392,404,433,449,464);
+delete from data_sdlib_stati where id in (1,12,14,65,95,104,105,110,204,219,229,275,326,337,338,340,341,342,370,392,404,433,449,464);
+
+select agv_name from data_sdlib_stati where agv_name like '%蜂谷%';
+select agv_name from data_sdlib_stati where agv_name like '%顺图易摆分%';
+select agv_name from data_sdlib_stati where agv_name like '%智慧书纽%';
+select agv_name from data_sdlib_stati where agv_name like '%智能中书%';
+select agv_name from data_sdlib_stati where agv_name like '%智汇图云%';
+
+update data_sdlib_stati set agv_name='智康图宝' where agv_name like '%智康图宝%';
+update data_sdlib_stati set agv_name='蜂谷' where agv_name like '%蜂谷%';
+update data_sdlib_stati set agv_name='顺图易摆分' where agv_name like '%顺图易摆分%';
+update data_sdlib_stati set agv_name='智慧书纽' where agv_name like '%智慧书纽%';
+update data_sdlib_stati set agv_name='智能中书' where agv_name like '%智能中书%';
+update data_sdlib_stati set agv_name='智汇图云' where agv_name like '%智汇图云%';
+
+select id,agv_name from data_sdlib_stati where agv_name in ('智汇图云','捷书通','智慧书纽','智能中书','书快链','传书精灵','顺图精灵','蜂谷','顺图凤移','慧拾小能手','拣消搬图灵','顺图易摆分','还书革格','原归','顺图捷','顺图“帮德手”','智能图管+','书识达','智康图宝','肖班','顺图畅','励精图智','书芯如意','e书通','易上架','智慧方圆','书馆大师','智运精灵','书顺达','顺智图','全智动','一路顺凤','简小帮','顺图灵机','顺图智服','知书智理','书顺到','书海智舟','顺图智慧仪') or id=2 or id=49 order by id;
+
+insert into data_sdlib_stati(agv_name,name_implication) values('原归','物归原主');
+insert into data_sdlib_stati(agv_name,name_implication) values('顺图捷','顺：顺德；图：图书馆；捷：快捷');
+insert into data_sdlib_stati(agv_name,name_implication) values('顺图畅','顺：顺德；图：图书馆；畅：顺畅，畅通。');
+insert into data_sdlib_stati(agv_name,name_implication) values('书顺达','书顺利到达');
+insert into data_sdlib_stati(agv_name,name_implication) values('一路顺凤','凤指的是顺德大良，一路顺凤是一路顺风的谐音');

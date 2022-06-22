@@ -107,11 +107,11 @@ public class AC {
 
         req.getSession().removeAttribute(ShiroConstants.CURRENT_VALIDATECODE);
 
-        if (lib.sdlib.jsb.mark.utils.StringUtils.isEmpty(user.getValidateCode()) || !user.getValidateCode().equalsIgnoreCase(code))
-        {
-            // equalsIgnoreCase 忽略大小写的比较
-            return Result.error("验证码为空或验证码错误");
-        }
+//        if (lib.sdlib.jsb.mark.utils.StringUtils.isEmpty(user.getValidateCode()) || !user.getValidateCode().equalsIgnoreCase(code))
+//        {
+//            // equalsIgnoreCase 忽略大小写的比较
+//            return Result.error("验证码为空或验证码错误");
+//        }
 
         if (errors.hasErrors()) {
             return Result.error(errors.getFieldError().getDefaultMessage());
@@ -203,7 +203,18 @@ public class AC {
 
         Collections.sort(list);
 
-        return Result.ok(list);
+        // 取第十个
+        DataSdlibStati dataSdlibStati = list.get(9);
+        int score = dataSdlibStati.getScore();
+        List<DataSdlibStati> list1 = new ArrayList();
+        for(DataSdlibStati data:list)
+        {
+            if(data.getScore()>=score)
+                list1.add(data);
+        }
+        Collections.sort(list1);
+
+        return Result.ok(list1);
     }
     /**
      * 根据前台拼接的ids取数据列表,返回
