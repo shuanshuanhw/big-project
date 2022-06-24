@@ -44,7 +44,7 @@
 <!--                    <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>-->
                 </div>
             </div>
-            <div style="padding: 10px;"><button type="button" @Click="start" style="width: 100%" class="layui-btn">刷新查看最终结果</button></div>
+
             <div class="content">
 
 
@@ -148,7 +148,7 @@
         methods: {
             async start() {
 
-                await  getTop10().then((res) => {
+                await  getTopUser10().then((res) => {
                          console.log(res.data.data)
                     this.tableData = res.data.data
                 }).catch((err) => {

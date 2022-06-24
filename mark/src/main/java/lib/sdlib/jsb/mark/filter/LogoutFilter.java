@@ -18,9 +18,9 @@ import javax.servlet.ServletResponse;
  *
  * @author ruoyi
  */
-public class LogoutFilter33333 extends org.apache.shiro.web.filter.authc.LogoutFilter
+public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 {
-    private static final Logger log = LoggerFactory.getLogger(LogoutFilter33333.class);
+    private static final Logger log = LoggerFactory.getLogger(LogoutFilter.class);
 
     /**
      * 退出后重定向的地址

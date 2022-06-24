@@ -2,7 +2,7 @@ ALTER TABLE data_sdlib_stati ADD score varchar(255) default '';
 ALTER TABLE data_sdlib_stati CHANGE score score22 varchar(255) default '';
 
 select * from data_sdlib_stati where agv_name like '%智康图宝%';
-select * from data_sdlib_stati where agv_name='图书精灵';
+select * from data_sdlib_stati where agv_name='图书馆管家';
 
 delete from data_sdlib_stati where id=395 or id=351;
 

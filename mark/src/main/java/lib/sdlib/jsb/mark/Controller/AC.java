@@ -8,6 +8,8 @@ import lib.sdlib.jsb.mark.common.Result;
 import lib.sdlib.jsb.mark.common.ShiroConstants;
 import lib.sdlib.jsb.mark.dao.DataSdlibStatiMapper;
 import lib.sdlib.jsb.mark.dao.LikeTimesMapper;
+import lib.sdlib.jsb.mark.dao.UserMapper;
+import lib.sdlib.jsb.mark.dao.UserRoleMapper;
 import lib.sdlib.jsb.mark.entity.DataSdlibStati;
 import lib.sdlib.jsb.mark.entity.LikeTimes;
 import lib.sdlib.jsb.mark.entity.User;
@@ -44,6 +46,11 @@ import java.util.*;
 //@RequestMapping("/agv")
 public class AC {
 
+    @Autowired
+    UserRoleMapper userRoleMapper;
+
+    @Autowired
+    UserMapper userMapper;
     /**
      * 是否开启记住我功能
      */
@@ -118,10 +125,13 @@ public class AC {
         }
         UsernamePasswordToken token = new UsernamePasswordToken(user.getLogin_name(), user.getPassword(), user.isRememberme());
         Subject subject = SecurityUtils.getSubject();
+
         try
         {
             subject.login(token);
-            return Result.ok();
+            // 根据userid取出角色
+            List<String> list = userRoleMapper.selectRoleByUserId(userMapper.selectUserByLoginName(user.getLogin_name()).getUser_id());
+            return Result.ok(list);
         }
         catch (AuthenticationException e)
         {
@@ -134,7 +144,7 @@ public class AC {
         }
     }
 
-//    @RequiresRoles("common")
+    @RequiresRoles("common")
     @ResponseBody
     @PostMapping("/agv/submitFruition")
     public Result submitFruition(@RequestBody List<DataSdlibStati> dataArray)
@@ -150,7 +160,7 @@ public class AC {
         return Result.ok();
     }
 
-//    @RequiresRoles("common")
+    @RequiresRoles("common")
     @GetMapping("/agv/getAll")
     @ResponseBody
     public Result getAll()
@@ -170,6 +180,51 @@ public class AC {
             data.setIfSelectString("未勾选");
         }
         return Result.ok(dataSdlibStatis);
+    }
+
+
+    @RequiresRoles("common")
+    @GetMapping("/getTopUser10")
+    @ResponseBody
+    public Result getTopUser10()
+    {
+        // 1、取出所有数据
+        Set<String> newSet = new HashSet();
+        List<LikeTimes> likeTimes = likeTimesMapper.selectAll();
+        log.info(likeTimesMapper.selectAll().toString());
+        log.info("likeTimes",likeTimes);
+        for(LikeTimes like:likeTimes)
+        {
+            // 通过去重
+            newSet.add(like.getArt());
+        }
+        log.info(newSet.toString());
+        // 2、排序
+        List<DataSdlibStati> list = new ArrayList();
+        for(String art:newSet)
+        {
+            int i = likeTimesMapper.selectCountByArt(art);
+            log.info(String.valueOf(i)+art);
+            DataSdlibStati dataSdlibStati = dataSdlibStatiMapper.selectByArt(art);
+            dataSdlibStati.setScore(i);
+            list.add(dataSdlibStati);
+        }
+        System.out.println(list.toString());
+
+        Collections.sort(list);
+
+        // 取第十个
+        DataSdlibStati dataSdlibStati = list.get(9);
+        int score = dataSdlibStati.getScore();
+        List<DataSdlibStati> list1 = new ArrayList();
+        for(DataSdlibStati data:list)
+        {
+            if(data.getScore()>=score)
+                list1.add(data);
+        }
+        Collections.sort(list1);
+
+        return Result.ok(list1);
     }
 
 
@@ -267,7 +322,7 @@ public class AC {
         return Result.ok(dataSdlibStati);
     }
 
-//    @RequiresRoles("common")
+    @RequiresRoles("common")
     @GetMapping("/xq")
     public String xq(@PathParam("id")Integer id, HttpServletRequest req)
     {
@@ -278,7 +333,7 @@ public class AC {
         return "xq";
     }
 
-//    @RequiresRoles("common")
+    @RequiresRoles("common")
     @GetMapping("/jg")
     public String jg(@PathParam("ids")String ids, HttpServletRequest req)
     {

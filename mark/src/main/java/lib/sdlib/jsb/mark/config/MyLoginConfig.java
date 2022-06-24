@@ -17,7 +17,7 @@ public class MyLoginConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
 //        registry.addViewController("/").setViewName("login");
         registry.addViewController("/").setViewName("index");
-//        registry.addViewController("/xq").setViewName("xq");
+        registry.addViewController("/usermark").setViewName("usermark");
         registry.addViewController("/test").setViewName("test");
         registry.addViewController("/mark").setViewName("mar");
         registry.addViewController("/adminmark").setViewName("mark");

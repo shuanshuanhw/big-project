@@ -16,7 +16,7 @@ import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.LogoutFilter;
+
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -248,7 +248,7 @@ public class ShiroConfig
     }
 
     /**
-     * 退出过滤器
+     * 退出过滤器 必须用自己定义的退出过滤器，如果用系统自带的没有真正的退出
      */
     public LogoutFilter logoutFilter()
     {
@@ -300,7 +300,7 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/agv/login", "anon");
-        filterChainDefinitionMap.put("/", "anon");
+//        filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/agv/**", "anon");
         filterChainDefinitionMap.put("/xq","anon");
         filterChainDefinitionMap.put("/jg","anon");
@@ -329,8 +329,8 @@ public class ShiroConfig
         而“/authenticated= user”表示访问该地址的用户是身份验证通过或RememberMe 登录的都可以。或者说，某个页面需要登录才能看，
         但这个页面信息又不太重要，就可已使用这个
          */
-        filterChainDefinitionMap.put("/**", "user,onlineSession,syncOnlineSession");
-//        filterChainDefinitionMap.put("/**", "user,kickout,onlineSession,syncOnlineSession");
+//        filterChainDefinitionMap.put("/**", "user,onlineSession,syncOnlineSession");
+        filterChainDefinitionMap.put("/**", "user,kickout,onlineSession,syncOnlineSession");
 //        filterChainDefinitionMap.put("/agv/**", "user,kickout,onlineSession,syncOnlineSession");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 

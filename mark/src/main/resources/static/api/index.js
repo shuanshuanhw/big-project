@@ -5,13 +5,18 @@ function getAll() {
     })
 }
 
+function getTopUser10() {
+    return $axios({
+        'url': '/getTopUser10',
+        'method': 'get'
+    })
+}
 function getTop10() {
     return $axios({
         'url': '/getTop10',
         'method': 'get'
     })
 }
-
 function getAllById(id) {
     return $axios({
         'url': `/agv/getAllById/${id}`,

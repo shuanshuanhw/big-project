@@ -74,7 +74,8 @@ public class UserRealm extends AuthorizingRealm
 
         // 根据userid取出角色
         List<String> list = userRoleMapper.selectRoleByUserId(user.getUser_id());
-        info.addRoles(list);
+
+
 
         // 管理员拥有所有权限
         if (user.isAdmin())
@@ -84,7 +85,12 @@ public class UserRealm extends AuthorizingRealm
         }
         else
         {
-//
+
+            for(String str: list)
+            {
+                info.addRole(roleMapper.selectByPrimaryKey(Long.parseLong(str)).getRole_key());
+            }
+
   //          roles = roleService.selectRoleKeys(user.getUser_id());
 
 //            menus = menuService.selectPermsByUserId(user.getUserId());
@@ -109,7 +115,6 @@ public class UserRealm extends AuthorizingRealm
         {
             password = new String(upToken.getPassword());
         }
-
         User user = null;
         try
         {

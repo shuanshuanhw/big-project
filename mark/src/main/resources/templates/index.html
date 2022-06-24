@@ -189,6 +189,7 @@
 
 <!--    <div><H2>欢迎光临 尊敬的评委</H2></div>-->
 
+    <div><a href="/logout"><img src="image/login/rc.png" width="50" /></a></div>
     <div style="margin-top: 20px;font-size: 20px;"><span style="margin-right: 30px;font-size: 50px;">点击箭头 开始考评</span> <div style="display: inline-block"><a href="#two" class="btn"><img src="image/login/dong.gif" width="120" /></a></div></div>
 </div>
     <div class="top1item">
@@ -386,7 +387,7 @@
                     if(res.data.flag)
                     {
                         layer.msg('提交成功,将跳转到考评第二流程...');
-                        window.location.href= '/mark'
+                        window.location.href= '/usermark'
                     }
                     else {
                         layer.msg('提交失败');

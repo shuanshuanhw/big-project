@@ -116,10 +116,11 @@
         data() {
             return {
                 loginForm:{
-                    login_name: 'admin',
+                    login_name: '',
                     password: '123456',
                     validateCode: '',
-                    rememberme: false
+                    rememberme: false,
+                    loginData: [],// 用于接收管理成功后返回的角色列表
                 },
                 loading: false,
                 timer: null,
@@ -170,12 +171,21 @@
                         await loginApi(this.loginForm).then(req =>
                         {
                             console.log('req.data',req.data)
+                            this.loginData = req.data.data;
                             if (req.data.flag) {
 
                                 this.$message.success(req.data.message)
                                 // 登陆成功后，把个人信息放在浏览器存储区域
                                 localStorage.setItem('userInfo',JSON.stringify(req.data))
-                                window.location.href= '/adminmark'
+
+                                // console.log(this.loginData.indexOf('1'))
+                                // if(this.loginData.includes('1'))
+                                //     console.log('true')
+                                // 如果是管理员角色，就跳到管理界面，如果是考评人角色，就跳到考证界面
+                                if(this.loginData.includes('1'))
+                                 window.location.href= '/adminmark'
+                                else if(this.loginData.includes('2'))
+                                    window.location.href= '/'
                             } else {
                                 // 这个应该是ｖｕｅ内置的函数
                                 this.$message.error(req.data.message)

@@ -44,7 +44,15 @@ create table user (
 ) engine=innodb auto_increment=100 comment = '用户信息表';
 
 insert into user values(1,  103, 'admin', '顺德图书馆管理员', '00', '178650140@qq.com', '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '管理员');
-insert into user values(2,  105, 'assessor',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(2,  105, 'as01',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(3,  105, 'as02',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(4,  105, 'as03',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(5,  105, 'as04',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(6,  105, 'as05',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(7,  105, 'as06',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(8,  105, 'as07',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(9,  105, 'as08',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(10,  105, 'as09',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
 
 -- ----------------------------
 -- 3、部门表
@@ -128,6 +136,15 @@ create table user_role (
 #                               用户ID 角色ID
 insert into user_role values ('1', '1');
 insert into user_role values ('2', '2');
+insert into user_role values ('3', '2');
+insert into user_role values ('4', '2');
+insert into user_role values ('5', '2');
+insert into user_role values ('6', '2');
+insert into user_role values ('7', '2');
+insert into user_role values ('8', '2');
+insert into user_role values ('9', '2');
+insert into user_role values ('10', '2');
+
 
 
 -- ----------------------------
