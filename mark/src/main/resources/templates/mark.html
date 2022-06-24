@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>考评打分</title>
-    <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
-
+<!--    <link rel="stylesheet" type="text/css" href="layui/css/layui.css">-->
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
@@ -25,10 +25,67 @@
             width: 100%;
             padding: 10px;
         }
+
+        .one{
+            width: 95%;
+            margin: 0 auto;
+            /*margin-right: 50px;*/
+            /*margin-left: 50px;*/
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            height: 70px;
+            justify-content: space-between;
+        }
+        .one img{
+            width: 50px;
+            align-items: center;
+            border-radius:50%;
+            overflow:hidden;
+            /*border: 1px solid #d94f28;*/
+        }
+        .oneright{
+
+            font-weight: bold;
+            color: #8a8a8a;
+            /*color: #333333;*/
+        }
+        .sptext{
+            font-size: 16px;
+            display: inline-block;
+            line-height: 16px;
+            vertical-align: -40%;
+            margin-left: 10px;
+            /*padding-top: 20px;*/
+        }
+        .oneright img{
+            width: 30px;
+        }
+        .block{
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
 <div id="app">
+    <div class="one"> <div>
+        <img src="image/login/logo_mini.png" />
+
+
+        <div class="block">
+            <span class="demonstration sptext">转向</span>
+            <el-cascader
+                    v-model="value"
+                    :options="options"
+                    @change="handleChange">
+
+
+            </el-cascader>
+        </div>
+
+
+    </div> <div class="oneright"><img src="image/login/people.png" /> <span class="sptext">登陆用户：评审员</span> </div></div>
+
     <div class="layui-bg-gray" ref="testDom" style="padding: 30px;position: sticky;top: 0;background-color: white;z-index: 999;">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
@@ -115,7 +172,19 @@
         el: '#app',
         data() {
             return {
-                tableData:[]
+                tableData:[],
+                value: [],
+                options: [{
+                    value: 'https://www.sdlib.com.cn/',
+                    label: '顺德图书馆官网'
+                },{
+                    value: 'http://192.168.252.73:833/',
+                    label: '顺德图书馆项目绩效管理系统'
+                },{
+                    value: 'http://192.168.252.73:822/manager/#/login',
+                    label: '顺德图书馆个人、部门绩效管理系统'
+                }
+                ]
             }
         },
         computed: {},
@@ -158,6 +227,9 @@
                     alert(err);
                 });
             },
+            handleChange(value) {
+                console.log(value);
+            }
         }
     })
 </script>
