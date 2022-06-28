@@ -22,11 +22,12 @@
     }
     .item{
         width: 400px;
-        height: 120px;
-        border: 1px solid #b2b2b2;
-        margin-top: 30px;
+        height: 30px;
+        /*border: 1px solid #b2b2b2;*/
+        margin-top: 10px;
         /*flex-basis: 20px;*/
     }
+
     .item-implication{
         text-indent:2em;
         height: 120px;
@@ -96,11 +97,11 @@
 
         <!--<div v-for="item in dataArray" :key="item.id" class="item"></div><div class="item" ></div>-->
 
-        <div class="layui-card item" v-for="item in dataArray" :key="item.id">
+        <div class="item" v-for="item in dataArray" :key="item.id">
             <div class="layui-card-header" style="color: #C2BE9E;">{{item.agv_name}}</div>
-            <div class="layui-card-body item-implication">
-                {{item.name_implication}}
-            </div>
+<!--            <div class="layui-card-body item-implication">-->
+<!--                {{item.name_implication}}-->
+<!--            </div>-->
         </div>
 
     </div>

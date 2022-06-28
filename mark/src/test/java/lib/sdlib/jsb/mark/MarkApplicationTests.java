@@ -119,4 +119,15 @@ class MarkApplicationTests {
         System.out.println("username:"+username);
         System.out.println("password:"+password);
     }
+
+    @Test
+    void test2()
+    {
+//        List<? super Number> list = new ArrayList<Integer>();
+        // 协变 只能获取元素，不能添加元素
+//        list.add(1);
+
+//        协变是向上转型，<? extends Animal> 只能get，不能add
+//        逆变是向下转型，<? super T> 不能get，只能add------get元素的时候需要进行强制转换
+    }
 }

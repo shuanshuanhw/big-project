@@ -259,16 +259,19 @@ public class AC {
         Collections.sort(list);
 
         // 取第十个
-        DataSdlibStati dataSdlibStati = list.get(9);
-        int score = dataSdlibStati.getScore();
         List<DataSdlibStati> list1 = new ArrayList();
-        for(DataSdlibStati data:list)
-        {
-            if(data.getScore()>=score)
-                list1.add(data);
-        }
-        Collections.sort(list1);
 
+        if(!list.isEmpty())
+        {
+            DataSdlibStati dataSdlibStati = list.get(9);
+            int score = dataSdlibStati.getScore();
+            for(DataSdlibStati data:list)
+            {
+                if(data.getScore()>=score)
+                    list1.add(data);
+            }
+            Collections.sort(list1);
+        }
         return Result.ok(list1);
     }
     /**

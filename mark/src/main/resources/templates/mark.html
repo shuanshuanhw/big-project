@@ -58,11 +58,37 @@
             margin-left: 10px;
             /*padding-top: 20px;*/
         }
+        el-button{
+            align-items: center;
+        }
         .oneright img{
             width: 30px;
+            /*display: flex;*/
+
+            /*align-items: center;*/
         }
         .block{
             display: inline-block;
+            margin-left: 10px;
+        }
+        .demonstration{
+            width: 50px;
+            line-height: 16px;
+            vertical-align:100%;
+            /*border-radius:50%;*/
+            overflow:hidden;
+        }
+        .second{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .second .secondone{
+        width: 70%;
+        }
+        .secondone .tit{
+            color: #663333;
+            font-size: 25px;
         }
     </style>
 </head>
@@ -73,7 +99,7 @@
 
 
         <div class="block">
-            <span class="demonstration sptext">转向</span>
+<!--            <span class="demonstration sptext">转向</span>-->
             <el-cascader
                     v-model="value"
                     :options="options"
@@ -84,24 +110,31 @@
         </div>
 
 
-    </div> <div class="oneright"><img src="image/login/people.png" /> <span class="sptext">登陆用户：评审员</span> </div></div>
+    </div> <div class="oneright"><img src="image/login/people.png" /> <span class="sptext">登陆用户：管理员</span>  </div></div>
 
     <div class="layui-bg-gray" ref="testDom" style="padding: 30px;position: sticky;top: 0;background-color: white;z-index: 999;">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md12">
-                <div class="layui-panel">
-                    <div style="padding: 10px;"><H1>顺德图书馆 综合考评系统 --- 考评打分</H1></div>
-<!--                    <div style="padding: 10px;"><H3>某某某,你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">详情</span></a> </H3></div>-->
-<!--                    <div style="padding: 10px;" v-if="ifVote2"><H2>您当前选择的作品如下(<span class="nc" @Click="ifVote2 = false">隐藏</span>):</H2></div>-->
-<!--                    <div style="padding: 10px;" class="box" v-if="ifVote2">-->
-<!--                        <div class="layui-card item-top" v-for="item in dataArraySelect" :key="item.id" style="">-->
-<!--                            {{item.agv_name}}-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>-->
+<!--            <div class="layui-col-md12">-->
+<!--                <div class="layui-panel">-->
+<!--                    <div style="padding: 10px;"><H1>顺德图书馆 综合考评系统 -&#45;&#45; 考评打分</H1></div>-->
+<!--&lt;!&ndash;                    <div style="padding: 10px;"><H3>某某某,你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">详情</span></a> </H3></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div style="padding: 10px;" v-if="ifVote2"><H2>您当前选择的作品如下(<span class="nc" @Click="ifVote2 = false">隐藏</span>):</H2></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div style="padding: 10px;" class="box" v-if="ifVote2">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="layui-card item-top" v-for="item in dataArraySelect" :key="item.id" style="">&ndash;&gt;-->
+<!--&lt;!&ndash;                            {{item.agv_name}}&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="second" style="padding: 10px;">
+                <div class="secondone">
+                    <span class="tit">顺德图书馆 综合考评系统 -&#45;&#45; 考评打分</span>
                 </div>
+                <div class="secondtwo"><el-button type="warning"  @Click="start" round style="background-color: #663333;border: none;">刷新查看最终结果</el-button> <a href="/logout"><el-button type="warning" round style="background-color: #663333;border: none;margin-left: 10px;">退出</el-button></a></div>
+
             </div>
-            <div style="padding: 10px;"><button type="button" @Click="start" style="width: 100%" class="layui-btn">刷新查看最终结果</button></div>
             <div class="content">
 
 

@@ -42,7 +42,7 @@
             background-repeat: no-repeat;
             background-position: right bottom;
             background-size: 20% 22%;
-            background-color: #EAE5D2;
+            background-color:LightGoldenrodYellow;
             /*margin-top: 10px;*/
             /*flex-basis: 20px;*/
         }
@@ -164,6 +164,9 @@
             height: 100%;
 
         }
+        .el-divider{
+            margin-top: 10px;
+        }
     </style>
     <!-- 引入 Vue 3, 使用全局变量 Vue -->
 <!--    <script src="https://unpkg.com/vue@3"></script>-->
@@ -201,7 +204,7 @@
         <div>
             <div>
                 <div>
-                    <div><H3>你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">详情</span></a> </H3></div>
+                    <div><H3>你好! 当前您已勾选<span class="nc">({{selectNumber}})</span>  个,点击查看已勾选 <a href="#" @Click="jg"><span class="nc">已选详情</span></a> </H3></div>
                     <div v-if="ifVote" style="padding: 10px;"><button type="button" @Click="submitFruition" style="width: 100%" class="layui-btn layui-btn-danger">点击提交勾选结果</button></div>
                 </div>
             </div>
@@ -225,6 +228,8 @@
     </div>
 
 </div>
+
+    <el-divider></el-divider>
 </div>
 <!--<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">-->
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
@@ -431,7 +436,7 @@
                 layer.open({
                     type: 2,
                     title: '以下是您当前已经勾选的喜欢列表',   //标题
-                    area: ['890px', '430px'],
+                    area: ['890px', '330px'],
                     content: '/jg?id='+id //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
                 });
             },

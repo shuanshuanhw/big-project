@@ -53,6 +53,10 @@ insert into user values(7,  105, 'as06',    '评审员', '00', '178650140@qq.com
 insert into user values(8,  105, 'as07',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
 insert into user values(9,  105, 'as08',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
 insert into user values(10,  105, 'as09',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(11,  105, 'as10',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(12,  105, 'as11',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(13,  105, 'as12',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
+insert into user values(14,  105, 'as13',    '评审员', '00', '178650140@qq.com',  '15007572525', '1', '', 'TbVvwkVwUZgXXzBVLLVNWA==', 'retail_salt', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '评审员');
 
 -- ----------------------------
 -- 3、部门表
@@ -144,6 +148,12 @@ insert into user_role values ('7', '2');
 insert into user_role values ('8', '2');
 insert into user_role values ('9', '2');
 insert into user_role values ('10', '2');
+insert into user_role values ('11', '2');
+insert into user_role values ('12', '2');
+insert into user_role values ('13', '2');
+insert into user_role values ('14', '2');
+insert into user_role values ('15', '2');
+insert into user_role values ('16', '2');
 
 
 
